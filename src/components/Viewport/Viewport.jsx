@@ -287,6 +287,11 @@ function Viewport({ previd, setprevid, viewing, setviewing }) {
                   onChange={handleResizeimage}
                   onDragEnd={handleImageDragEnd}
                   imageDetails={img}
+                  shadowColor="black"
+                  shadowBlur={10}
+                  shadowOpacity={0.6}
+                  shadowOffsetX={10}
+                  shadowOffsetY={10}
                   index={i}
                   id={i}
                 />
