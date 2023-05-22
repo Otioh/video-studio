@@ -277,27 +277,27 @@ function Viewport({previd, setprevid, viewing, setviewing}) {
             backgroundColor: "black",
             position: "fixed",
             zIndex: 100,
-           
 
             top: 0,
             left: 0,
           }}
         >
-          <button onClick={()=>{
-setviewing(false)
-setprevid()
-          }}>
+          <button
+            onClick={() => {
+              setviewing(false);
+              setprevid();
+            }}
+          >
             Stop Preview
           </button>
           <div
             style={{
               height: "100%",
               width: "100%",
-           
+
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-
             }}
           >
             Please Wait
@@ -313,7 +313,6 @@ setprevid()
           height={dimensions.height}
           ref={stageRef}
         >
-          
           <Layer id="myCanva">
             <Rect
               x={0}
@@ -330,6 +329,11 @@ setprevid()
                   onChange={handleResizeimage}
                   onDragEnd={handleImageDragEnd}
                   imageDetails={img}
+                  shadowColor="black"
+                  shadowBlur={10}
+                  shadowOpacity={0.6}
+                  shadowOffsetX={10}
+                  shadowOffsetY={10}
                   index={i}
                   id={i}
                 />

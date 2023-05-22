@@ -6,7 +6,7 @@ const useSlidesStore = create((set) => ({
   currentSlide: DEFAULT_SLIDE_OBJECT,
   play: false,
   currentSlideIndex: 0,
-  totalDuration: 5,
+  totalDuration: 15,
   audio: null,
   isRecording: false,
   addNewSlide: () =>

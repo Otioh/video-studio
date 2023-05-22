@@ -5,6 +5,7 @@ import Home from './Pages/Home';
 import { Toaster } from 'react-hot-toast';
 import Studio from './Pages/Studio';
 import { useState } from 'react';
+import NotFound from './Pages/NotFound';
 
 function App() {
  const [previd, setprevid]= useState()
@@ -16,8 +17,9 @@ function App() {
     
       <Routes>
         <Route path={'/editor'} element={<Editor previd={previd} setprevid={setprevid} />} />
-       
-        <Route path="/" element={<Home />} />
+        <Route path={'/*'} element={<NotFound  />} />
+
+        <Route path="/" element={<Editor previd={previd} setprevid={setprevid} />} />
       </Routes>
       <Toaster />
     </div>

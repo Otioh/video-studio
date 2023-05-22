@@ -27,6 +27,7 @@ const ImageWithTransformer = ({
     <>
       <Image
         ref={shapeRef}
+        
         image={image}
         onClick={() => setIsSelected(true)}
         onSelect={() => setIsSelected(true)}
