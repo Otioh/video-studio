@@ -1,17 +1,15 @@
-import { Button, Select } from 'antd';
-import { Link, useNavigate } from 'react-router-dom';
-import { ArrowLeft } from '../../assets/icons/ArrowLeft';
-import { Clock } from '../../assets/icons/Clock';
-import { Play } from '../../assets/icons/Play';
-import { Redo } from '../../assets/icons/Redo';
-import { Undo } from '../../assets/icons/Undo';
-
-import logo from '../../assets/img/logo.png';
-import useSlidesStore from '../../store/useSlidesStore';
-import { sleep } from '../../utils/commonFunction';
-import { DURATION_OPTIONS } from '../../utils/constants';
-import toast from 'react-hot-toast';
-import './Header.scss';
+import { Button, Select } from "antd";
+import { Link, useNavigate } from "react-router-dom";
+import { ArrowLeft } from "../../assets/icons/ArrowLeft";
+import { Clock } from "../../assets/icons/Clock";
+import { Play } from "../../assets/icons/Play";
+import { Redo } from "../../assets/icons/Redo";
+import { Undo } from "../../assets/icons/Undo";
+import useSlidesStore from "../../store/useSlidesStore";
+import { sleep } from "../../utils/commonFunction";
+import { DURATION_OPTIONS } from "../../utils/constants";
+import toast from "react-hot-toast";
+import "./Header.scss";
 
 function Header({ handleGetStarted, previd, setprevid, setviewing }) {
   const isPlay = useSlidesStore((state) => state.play);
@@ -50,20 +48,18 @@ function Header({ handleGetStarted, previd, setprevid, setviewing }) {
     let chunks = [];
 
     mediaRecorder.ondataavailable = function (e) {
-      console.log(e.data)
+      console.log(e.data);
       chunks.push(e.data);
     };
 
     // When the media recorder stops this would download the video to the device
     mediaRecorder.onstop = async function (e) {
-      console.log('Inside the handle on stop');
-      const blob = new Blob(chunks, { type: 'video/mp4' });
+      console.log("Inside the handle on stop");
+      const blob = new Blob(chunks, { type: "video/mp4" });
       chunks = [];
       const videoURL = URL.createObjectURL(blob);
-    
-      setprevid(videoURL)
-    
-     
+
+      setprevid(videoURL);
     };
 
     return mediaRecorder;
@@ -84,7 +80,7 @@ function Header({ handleGetStarted, previd, setprevid, setviewing }) {
 
   // This function is to handle the stopping of recording Just needs to stop media recorder and also pause the audio
   const handleRecordingStopped = async (mediaRecorder, audio) => {
-    console.log('Inside the handle recording saved');
+    console.log("Inside the handle recording saved");
     await mediaRecorder.stop();
     await audio.pause();
     // audioPlaying.current = null;
@@ -103,7 +99,7 @@ function Header({ handleGetStarted, previd, setprevid, setviewing }) {
 
   // This function is to start the video stream
   const startVideoStream = async () => {
-    const canvas = document.querySelector('.konva_current_canvas canvas');
+    const canvas = document.querySelector(".konva_current_canvas canvas");
     // const ctx = canvas.getContext('2d');
     const videoStream = canvas.captureStream(30);
     return videoStream;
@@ -114,7 +110,7 @@ function Header({ handleGetStarted, previd, setprevid, setviewing }) {
     if (isPlay) return;
 
     if (!audioSelected) {
-      toast.error('Please select an audio file first');
+      toast.error("Please select an audio file first");
       return;
     }
 
@@ -153,9 +149,9 @@ function Header({ handleGetStarted, previd, setprevid, setviewing }) {
 
   // This function is used to handle the play and save
   const handleSave = async () => {
-    setviewing(true)
+    setviewing(true);
     if (!audioSelected) {
-      toast.error('Please select an audio file first');
+      toast.error("Please select an audio file first");
       return;
     }
     handlePlayCompleteVideo();
@@ -163,29 +159,22 @@ function Header({ handleGetStarted, previd, setprevid, setviewing }) {
 
   const handleBackClick = () => {
     resetSlideStore();
-    navigate('/');
+    navigate("/");
   };
 
   return (
     <header className="header">
       <div className="header__logo">
-        <img src="https://app.googptai.com/img/logo.png" alt="logo" />
+        <img
+          src="https://app.googptai.com/img/logo.png"
+          alt="logo"
+          width="200"
+        />
       </div>
       <div className="header__action">
-        {/* <Link to="/">
-          <div onClick={handleBackClick} className="header__action__back">
-            <ArrowLeft />
-            Go back
-          </div>
-        </Link> */}
         <div className="header__action__buttons">
           <div className="buttons__history">
-            {/* <Button type="ghost" onClick={() => handleGetStarted()}>
-              Getting Started
-            </Button> */}
-
             <Undo />
-      
           </div>
           <div className="buttons__divider" />
 

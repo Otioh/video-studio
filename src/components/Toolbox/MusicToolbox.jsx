@@ -90,54 +90,10 @@ const MusicToolbox = () => {
     updateSlides();
   };
 
-  // This function is used to delete the image media on click of delete
-  // const deleteImageItem = (index) => {
-  //   const newImageList = [...currentSlide.images];
-  //   newImageList.splice(index, 1);
-  //   const newPreviewImageList = [...currentSlide.previewImages];
-  //   newPreviewImageList.splice(index, 1);
-  //   const newSlide = {
-  //     ...currentSlide,
-  //     images: newImageList,
-  //     previewImages: newPreviewImageList,
-  //   };
-  //   updateCurrentSlide(newSlide);
-  //   const idx = currentSlideIndex;
-  //   const newSlides =
-  //     slides?.map((obj, i) => (idx === idx ? newSlide : obj)) ?? [];
-  //   updateSlides(newSlides);
-  // };
-
   return (
     <>
       <div className="toolbox_title">Search Music</div>
       <div className="image_toolbox_container">
-        {/*
-        <label htmlFor="Upload image">Image File</label>
-        <input
-          onChange={handleImageFileSelect}
-          accept="image/*"
-          type="file"
-          name=""
-          id=""
-        />
-        {currentSlide?.previewImages?.length ? (
-          <div className="image_list">
-            {currentSlide?.previewImages?.map((img, i) => (
-              <div className="image_item" key={i}>
-                <img
-                  alt="preview"
-                  src={URL.createObjectURL(img.previewImage)}
-                  width="60"
-                  height="60"
-                />
-                <DeleteOutlined onClick={() => deleteImageItem(i)} />
-              </div>
-            ))}
-          </div>
-        ) : (
-          ''
-        )} */}
         <input
           className="input-select"
           onKeyDown={onKeyDownHandler}
@@ -162,15 +118,6 @@ const MusicToolbox = () => {
                   <source src={item.video_files.link} type={item.file_type} />
                 </video>
               </a>
-
-              // <div key={index} style={{ width: "100%" }}>
-              //   <video
-              //     src={item.src.small}
-              //     alt={item.id}
-              //     width={130}
-              //     height={130}
-              //   ></video>
-              // </div>
             );
           })}
         </div>

@@ -7,7 +7,6 @@ import "./Sidebar.scss";
 function Sidebar({ activeItem, setActiveItem }) {
   return (
     <div className="sidebar">
-    
       <ul className="sidebar__list">
         <li
           className={
@@ -68,7 +67,6 @@ function Sidebar({ activeItem, setActiveItem }) {
           <Play />
           <span>Music</span>
         </li>
-        
       </ul>
     </div>
   );

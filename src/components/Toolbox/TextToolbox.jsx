@@ -1,27 +1,27 @@
-import { Button, Input, Select } from 'antd';
-import React, { useState } from 'react';
+import { Button, Input, Select } from "antd";
+import React, { useState } from "react";
 import {
   AlignCenterOutlined,
   AlignLeftOutlined,
   AlignRightOutlined,
   BoldOutlined,
   ItalicOutlined,
-  UnderlineOutlined
-} from '@ant-design/icons';
-import { ANIMATION_EASINGS, FONT_OPTIONS } from '../../utils/constants';
-import useSlidesStore from '../../store/useSlidesStore';
+  UnderlineOutlined,
+} from "@ant-design/icons";
+import { ANIMATION_EASINGS, FONT_OPTIONS } from "../../utils/constants";
+import useSlidesStore from "../../store/useSlidesStore";
 
 const { TextArea } = Input;
 
 function TextToolbox() {
-  const [fontFamily, setFontFamily] = useState('Ariel');
-  const [fontSize, setFontSize] = useState('32');
-  const [fontStyle, setFontStyle] = useState('bold');
-  const [color, setColor] = useState('#000000');
-  const [text, setText] = useState('');
-  const [align, setAlign] = useState('left');
-  const [textDecoration, setTextDecoration] = useState('');
-  const [inAnimation, setInAnimation] = useState('Linear');
+  const [fontFamily, setFontFamily] = useState("Ariel");
+  const [fontSize, setFontSize] = useState("32");
+  const [fontStyle, setFontStyle] = useState("bold");
+  const [color, setColor] = useState("#000000");
+  const [text, setText] = useState("");
+  const [align, setAlign] = useState("left");
+  const [textDecoration, setTextDecoration] = useState("");
+  const [inAnimation, setInAnimation] = useState("Linear");
 
   // Use current slide to display here
   const slides = useSlidesStore((state) => state.slides);
@@ -36,13 +36,13 @@ function TextToolbox() {
   };
 
   const resetText = () => {
-    setFontSize('32');
-    setFontStyle('bold');
-    setColor('#000000');
-    setAlign('left');
-    setTextDecoration('');
-    setText('');
-    setInAnimation('Linear');
+    setFontSize("32");
+    setFontStyle("bold");
+    setColor("#000000");
+    setAlign("left");
+    setTextDecoration("");
+    setText("");
+    setInAnimation("Linear");
   };
 
   const handleAddText = () => {
@@ -52,7 +52,7 @@ function TextToolbox() {
       fontSize: fontSize ? parseInt(fontSize) : 32,
       size: fontSize ? parseInt(fontSize) : 32,
       colour: color,
-      outAnimation: 'EaseOut',
+      outAnimation: "EaseOut",
       duration: 2,
       //   fontFamily: fontFamily.value,
       x: 0,
@@ -61,7 +61,7 @@ function TextToolbox() {
       fontStyle,
       text,
       align,
-      textDecoration
+      textDecoration,
     };
 
     //  Update current Slide
@@ -89,10 +89,10 @@ function TextToolbox() {
   };
 
   const handleTextDecoration = () => {
-    if (textDecoration === 'underline') {
-      setTextDecoration('');
+    if (textDecoration === "underline") {
+      setTextDecoration("");
     } else {
-      setTextDecoration('underline');
+      setTextDecoration("underline");
     }
   };
 
@@ -114,24 +114,13 @@ function TextToolbox() {
         <div className="stylebox_title">Textstyles</div>
         <div className="stylebox_actions">
           <div className="dropdown-wrapper">
-            {/* <Select
-              className="dropdown-wrapper_fontfamily"
-              defaultValue="Ariel"
-              onChange={handleChange}
-              options={[
-                { value: 'Ariel', label: 'Ariel' },
-                { value: 'lucy', label: 'Lucy' },
-                { value: 'Yiminghe', label: 'yiminghe' },
-                { value: 'disabled', label: 'Disabled' }
-              ]}
-            /> */}
             <Select
               style={{
-                width: '200px'
+                width: "200px",
               }}
               showSearch
               filterOption={(input, option) =>
-                (option?.label ?? '')
+                (option?.label ?? "")
                   .toLowerCase()
                   .includes(input.toLowerCase())
               }
@@ -145,7 +134,7 @@ function TextToolbox() {
             <Select
               defaultValue="Linear"
               style={{
-                width: '200px'
+                width: "200px",
               }}
               onChange={(value) => setInAnimation(value)}
               options={ANIMATION_EASINGS}
@@ -155,17 +144,17 @@ function TextToolbox() {
             <div className="btn-actions">
               <span className="btn">
                 <BoldOutlined
-                  onClick={() => setFontStyle('bold')}
+                  onClick={() => setFontStyle("bold")}
                   style={{
-                    color: fontStyle === 'bold' ? 'black' : 'grey'
+                    color: fontStyle === "bold" ? "black" : "grey",
                   }}
                 />
               </span>
               <span className="btn">
                 <ItalicOutlined
-                  onClick={() => setFontStyle('italic')}
+                  onClick={() => setFontStyle("italic")}
                   style={{
-                    color: fontStyle === 'italic' ? 'black' : 'grey'
+                    color: fontStyle === "italic" ? "black" : "grey",
                   }}
                 />
               </span>
@@ -173,7 +162,7 @@ function TextToolbox() {
                 <UnderlineOutlined
                   onClick={handleTextDecoration}
                   style={{
-                    color: textDecoration ? 'black' : 'grey'
+                    color: textDecoration ? "black" : "grey",
                   }}
                 />
               </span>
@@ -181,25 +170,25 @@ function TextToolbox() {
             <div className="btn-actions">
               <span className="btn">
                 <AlignLeftOutlined
-                  onClick={() => setAlign('left')}
+                  onClick={() => setAlign("left")}
                   style={{
-                    color: align === 'left' ? 'black' : 'grey'
+                    color: align === "left" ? "black" : "grey",
                   }}
                 />
               </span>
               <span className="btn">
                 <AlignCenterOutlined
-                  onClick={() => setAlign('center')}
+                  onClick={() => setAlign("center")}
                   style={{
-                    color: align === 'center' ? 'black' : 'grey'
+                    color: align === "center" ? "black" : "grey",
                   }}
                 />
               </span>
               <span className="btn">
                 <AlignRightOutlined
-                  onClick={() => setAlign('right')}
+                  onClick={() => setAlign("right")}
                   style={{
-                    color: align === 'right' ? 'black' : 'grey'
+                    color: align === "right" ? "black" : "grey",
                   }}
                 />
               </span>
@@ -213,28 +202,10 @@ function TextToolbox() {
               name="color"
             />
           </div>
-
-          {/* <div className="stylebox_actions_btngrp">
-            <div className="btn-actions">
-              <span className="text">Auto</span>
-              <span className="icon">
-                <Outline />
-              </span>
-            </div>
-            <div className="btn-actions">
-              <span className="text">Auto</span>
-              <span className="Icon">
-                <HorizontalOutline />
-              </span>
-            </div>
-          </div> */}
-
           <div className="stylebox_actions_btngrp">
-            {/* <div className="btn-actions"> */}
             <Button type="primary" onClick={handleAddText}>
               Add Text
             </Button>
-            {/* </div> */}
           </div>
         </div>
       </div>

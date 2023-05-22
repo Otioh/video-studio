@@ -1,10 +1,8 @@
 import React from "react";
 import { useState, useEffect } from "react";
-// import search from "../../assets/img/search.png";
 import "./searchBar.css";
 import useSlidesStore from "../../store/useSlidesStore";
 import axios from "axios";
-// import useVideoStore from "../../store/useVideoStore";
 
 const ASPECT_RATIO = 16 / 9;
 const DEFAULT_HEIGHT = 250;
@@ -26,7 +24,6 @@ const GraphicToolbox = () => {
     (state) => state.updateCurrentSlide
   );
   const updateSlides = useSlidesStore((state) => state.updateSlides);
-  // console.log(data);
 
   // Load curated photos on component mount
   React.useEffect(() => {
@@ -92,62 +89,6 @@ const GraphicToolbox = () => {
     }
   }, [page]);
 
-  //This function is to get photos from pexels api ends here
-  // const { setVideoURL } = useVideoStore();
-  // This function is to handle image file selection REAL
-  // const handleVideoFile = (data) => {
-  //   // setVideoURL(videoLink); add videoLink as a parameter
-
-  //   fetch(data)
-  //     .then((response) => response.blob())
-  //     .then((blob) => {
-  //       const file = new File([blob], "filename.mp4", {
-  //         type: "video/mp4",
-  //       });
-  //       let isImage = file?.type?.startsWith("image/");
-  //       const url = window.URL.createObjectURL(file);
-  //       const element = document.createElement("video");
-  //       const newImage = {
-  //         id: Date.now(),
-  //         image: element,
-  //         previewImage: file,
-  //         x: 0,
-  //         y: 0,
-  //         height: DEFAULT_HEIGHT,
-  //         width: DEFAULT_HEIGHT * ASPECT_RATIO,
-  //       };
-  //       let slide = { ...currentSlide };
-  //       slide = {
-  //         ...slide,
-  //         images: [...slide.images, newImage],
-  //         previewImages: [...slide.previewImages, newImage],
-  //       };
-  //       if (!isImage) {
-  //         let source = document.createElement("source");
-  //         source.type = "video/mp4";
-  //         source.url = url;
-  //         element.appendChild(source);
-  //       }
-  //       element.onload = () => {
-  //         window.URL.revokeObjectURL(url);
-  //         // Update the slides array
-  //         const index = currentSlideIndex;
-  //         const newSlides =
-  //           slides?.map((obj, idx) => (idx === index ? slide : obj)) ?? [];
-  //         updateSlides(newSlides);
-  //       };
-  //       if (isImage) {
-  //         element.src = url;
-  //       } else {
-  //         element.getElementsByTagName("source")[0].src = url;
-  //         console.log(element);
-  //         element.play();
-  //       }
-  //       updateCurrentSlide(slide);
-  //       updateSlides();
-  //     });
-  // };
-
   const handleVideoFile = (data) => {
     const locate = data;
     console.log(locate);
@@ -196,141 +137,13 @@ const GraphicToolbox = () => {
           element.play();
         }
         updateCurrentSlide(slide);
-    
       });
   };
-
-  // const handleVideoFile = (data) => {
-  //   const file = data;
-  //   console.log(file);
-
-  //   let isImage = file?.type?.startsWith("image/");
-  //   const url = window.URL.createObjectURL(file);
-  //   const element = isImage
-  //     ? new window.Image()
-  //     : document.createElement("video");
-  //   const newImage = {
-  //     id: Date.now(),
-  //     image: element,
-  //     previewImage: file,
-  //     x: 0,
-  //     y: 0,
-  //     height: DEFAULT_HEIGHT,
-  //     width: DEFAULT_HEIGHT * ASPECT_RATIO,
-  //   };
-  //   let slide = { ...currentSlide };
-  //   slide = {
-  //     ...slide,
-  //     images: [...slide.images, newImage],
-  //     previewImages: [...slide.previewImages, newImage],
-  //   };
-  //   if (!isImage) {
-  //     let source = document.createElement("source");
-  //     source.type = "video/ogg";
-  //     source.url = url;
-  //     element.appendChild(source);
-  //   }
-  //   element.onload = () => {
-  //     window.URL.revokeObjectURL(url);
-  //     // Update the slides array
-  //     const index = currentSlideIndex;
-  //     const newSlides =
-  //       slides?.map((obj, idx) => (idx === index ? slide : obj)) ?? [];
-  //     updateSlides(newSlides);
-  //   };
-  //   if (isImage) {
-  //     element.src = url;
-  //   } else {
-  //     element.getElementsByTagName("source")[0].src = url;
-  //     element.play();
-  //   }
-  //   updateCurrentSlide(slide);
-  //   updateSlides();
-  // };
-  // const handleImageFileSelect = (event) => {
-  //   const file = event.target.files[0];
-  //   if (!file?.type?.startsWith("image/")) {
-  //     console.log("Please select an image file.");
-  //     return;
-  //   }
-  //   const url = window.URL.createObjectURL(file);
-  //   const img = new window.Image();
-  //   const newImage = {
-  //     id: Date.now(),
-  //     image: img,
-  //     previewImage: file,
-  //     x: 0,
-  //     y: 0,
-  //     height: DEFAULT_HEIGHT,
-  //     width: DEFAULT_HEIGHT * ASPECT_RATIO,
-  //   };
-  //   let slide = { ...currentSlide };
-  //   slide = {
-  //     ...slide,
-  //     images: [...slide.images, newImage],
-  //     previewImages: [...slide.previewImages, newImage],
-  //   };
-  //   img.onload = () => {
-  //     window.URL.revokeObjectURL(url);
-  //     // Update the slides array
-  //     const index = currentSlideIndex;
-  //     const newSlides =
-  //       slides?.map((obj, idx) => (idx === index ? slide : obj)) ?? [];
-  //     updateSlides(newSlides);
-  //   };
-  //   img.src = url;
-  //   updateCurrentSlide(slide);
-  //   updateSlides();
-  // };
-
-  // This function is used to delete the image media on click of delete
-  // const deleteImageItem = (index) => {
-  //   const newImageList = [...currentSlide.images];
-  //   newImageList.splice(index, 1);
-  //   const newPreviewImageList = [...currentSlide.previewImages];
-  //   newPreviewImageList.splice(index, 1);
-  //   const newSlide = {
-  //     ...currentSlide,
-  //     images: newImageList,
-  //     previewImages: newPreviewImageList,
-  //   };
-  //   updateCurrentSlide(newSlide);
-  //   const idx = currentSlideIndex;
-  //   const newSlides =
-  //     slides?.map((obj, i) => (idx === idx ? newSlide : obj)) ?? [];
-  //   updateSlides(newSlides);
-  // };
 
   return (
     <>
       <div className="toolbox_title">Search Videos</div>
       <div className="image_toolbox_container">
-        {/*
-        <label htmlFor="Upload image">Image File</label>
-        <input
-          onChange={handleImageFileSelect}
-          accept="image/*"
-          type="file"
-          name=""
-          id=""
-        />
-        {currentSlide?.previewImages?.length ? (
-          <div className="image_list">
-            {currentSlide?.previewImages?.map((img, i) => (
-              <div className="image_item" key={i}>
-                <img
-                  alt="preview"
-                  src={URL.createObjectURL(img.previewImage)}
-                  width="60"
-                  height="60"
-                />
-                <DeleteOutlined onClick={() => deleteImageItem(i)} />
-              </div>
-            ))}
-          </div>
-        ) : (
-          ''
-        )} */}
         <input
           className="input-select"
           onKeyPress={handleSearch}
@@ -349,7 +162,6 @@ const GraphicToolbox = () => {
                   <video
                     className="video"
                     key={item.video_files[0].id}
-                    
                     width={130}
                     height={130}
                     id="my-video"
@@ -372,7 +184,6 @@ const GraphicToolbox = () => {
                   className="video"
                   key={item.video_files[0].id}
                   width={130}
-                  
                   height={130}
                 >
                   <source
