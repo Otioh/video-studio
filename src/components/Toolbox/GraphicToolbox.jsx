@@ -161,6 +161,7 @@ const GraphicToolbox = () => {
                 <div onClick={() => console.log("Hello World")}>
                   <video
                     className="video"
+                    controls
                     key={item.video_files[0].id}
                     width={130}
                     height={130}
@@ -181,6 +182,7 @@ const GraphicToolbox = () => {
             {curatedVideos.map((item) => (
               <div onClick={() => handleVideoFile(item.video_files[0].link)}>
                 <video
+                  controls
                   className="video"
                   key={item.video_files[0].id}
                   width={130}
