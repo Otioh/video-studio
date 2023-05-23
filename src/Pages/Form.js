@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import useSlidesStore from "../store/useSlidesStore";
+import "./form.css";
 
 function Form() {
   let navigate = useNavigate();
