@@ -1,0 +1,22 @@
+.form-group {
+  background-color: whitesmoke;
+  width: 36rem;
+  padding: 1rem;
+  border-radius: 10px;
+}
+
+.card-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.button {
+  cursor: pointer;
+  font-size: 11px;
+  background-color: #007bff;
+  color: white;
+}
+.button:hover {
+  background-color: black;
+}
