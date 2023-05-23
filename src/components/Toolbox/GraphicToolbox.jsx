@@ -4,20 +4,22 @@ import { useState, useEffect } from "react";
 import "./searchBar.css";
 import useSlidesStore from "../../store/useSlidesStore";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
 // import useVideoStore from "../../store/useVideoStore";
 
 const ASPECT_RATIO = 16 / 9;
-const DEFAULT_HEIGHT = 250;
+const DEFAULT_HEIGHT = 400;
 const API_KEY = "JERuP3DyRWnvRki7QMAEoWwXveDZw4RWsSwrT5IyMXRHcOiGRGvsK6gC";
 const API_URL = "https://api.pexels.com/videos/search";
-const GraphicToolbox = () => {
+const GraphicToolbox = ({ setspinn }) => {
   const [curatedVideos, setCuratedVideos] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   console.log(searchResults);
-
+let navigate=useNavigate()
   // Use current slide to display here
   const slides = useSlidesStore((state) => state.slides);
   const currentSlide = useSlidesStore((state) => state.currentSlide);
@@ -65,6 +67,15 @@ const GraphicToolbox = () => {
       }
     }
   };
+
+
+  const landView=()=>{
+    document.getElementById('viewBtn').click()
+  }
+
+   const landplay = () => {
+     document.getElementById("playBtn").click();
+   };
 
   const handleLoadMore = async () => {
     setPage(page + 1);
@@ -149,6 +160,8 @@ const GraphicToolbox = () => {
   // };
 
   const handleVideoFile = (data) => {
+
+    setspinn(true)
     const locate = data;
     console.log(locate);
     fetch(locate)
@@ -188,17 +201,40 @@ const GraphicToolbox = () => {
           const newSlides =
             slides?.map((obj, idx) => (idx === index ? slide : obj)) ?? [];
           updateSlides(newSlides);
+         
         };
         if (isImage) {
           element.src = url;
         } else {
           element.getElementsByTagName("source")[0].src = url;
+        
           element.play();
+            setspinn(false);
+            landView();
+            landplay();
         }
         updateCurrentSlide(slide);
-    
       });
+       
   };
+
+  useEffect(()=>{
+   handleVideoFile(
+     "https://player.vimeo.com/external/189545487.sd.mp4?s=8cd2af1ec08f7ce121a5a6a09c78c05237943524&profile_id=164&oauth2_token_id=57447761"
+   );
+
+
+  }, [])
+
+
+
+
+
+//   useEffect(()=>{
+// sceneMaker(
+//   "https://player.vimeo.com/external/330412624.hd.mp4?s=9a9c77ce40f703dcb023eca64c85e258195efa28&profile_id=174&oauth2_token_id=57447761"
+// );
+//   }, [])
 
   // const handleVideoFile = (data) => {
   //   const file = data;
@@ -349,14 +385,18 @@ const GraphicToolbox = () => {
                   <video
                     className="video"
                     key={item.video_files[0].id}
-                    
+                    draggable
+                    controls
                     width={130}
                     height={130}
                     id="my-video"
                   >
                     <source
                       src={item.video_files[0].link}
-                      onClick={() => handleVideoFile(item.video_files[0].link)}
+                      draggable
+                      onDragEndCapture={() =>
+                        handleVideoFile(item.video_files[0].link)
+                      }
                       type={item.video_files.file_type}
                     />
                   </video>
@@ -367,17 +407,25 @@ const GraphicToolbox = () => {
         ) : (
           <div className="card">
             {curatedVideos.map((item) => (
-              <div onClick={() => handleVideoFile(item.video_files[0].link)}>
+              <div
+                onDragEndCapture={() =>
+                  handleVideoFile(item.video_files[0].link)
+                }
+              >
                 <video
                   className="video"
                   key={item.video_files[0].id}
                   width={130}
-                  
+                  draggable
+                  controls
                   height={130}
                 >
                   <source
+                  draggable
                     src={item.video_files[0].link}
-                    onClick={() => handleVideoFile(item.video_files[0].link)}
+                    onDragEndCapture={() =>
+                      handleVideoFile(item.video_files[0].link)
+                    }
                     type={item.video_files.file_type}
                   />
                 </video>

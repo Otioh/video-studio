@@ -35,7 +35,7 @@ export const DEFAULT_SLIDE_OBJECT = {
   previewAudio: "",
   backgroundColor: "#fff",
   duration: 5,
- 
+
   videos: [],
   previewVideos: [],
 };

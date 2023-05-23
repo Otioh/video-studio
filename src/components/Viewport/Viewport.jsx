@@ -9,12 +9,13 @@ import Video from "./CanvasVideoViewer";
 import { DeleteOutlined } from "@ant-design/icons";
 import record from "canvas-to-video";
 
+
+
 function Viewport({previd, setprevid, viewing, setviewing}) {
   const [dimensions, setDimensions] = useState({
     width: 0,
     height: 0,
   });
-
 
 
 
@@ -321,6 +322,8 @@ function Viewport({previd, setprevid, viewing, setviewing}) {
               width={dimensions.width - 3}
               height={dimensions.height - 3}
             ></Rect>
+          
+          
 
             {currentSlide?.images?.map((img, i) => (
               <React.Fragment key={i}>

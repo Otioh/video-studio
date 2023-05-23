@@ -5,12 +5,12 @@ import GraphicToolbox from "./GraphicToolbox";
 import UploadToolbox from "./UploadToolbox";
 import MusicToolbox from "./MusicToolbox";
 
-function Toolbox({ activeItem: toolbox }) {
+function Toolbox({ activeItem: toolbox, setspinn }) {
   return (
     <div className="toolbox">
-      {toolbox === "text" && <TextToolbox />}
-      {toolbox === "media" && <MediaToolbox />}
-      {toolbox === "graphics" && <GraphicToolbox />}
+      {toolbox === "text" && <TextToolbox setspinn={setspinn} />}
+      {toolbox === "media" && <MediaToolbox setspinn={setspinn} />}
+      {toolbox === "graphics" && <GraphicToolbox setspinn={setspinn} />}
       {toolbox === "upload" && <UploadToolbox />}
       {toolbox === "music" && <MusicToolbox />}
     </div>

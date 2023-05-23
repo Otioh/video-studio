@@ -1,5 +1,5 @@
 import { Button, Input, Select } from 'antd';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   AlignCenterOutlined,
   AlignLeftOutlined,
@@ -10,18 +10,20 @@ import {
 } from '@ant-design/icons';
 import { ANIMATION_EASINGS, FONT_OPTIONS } from '../../utils/constants';
 import useSlidesStore from '../../store/useSlidesStore';
+import toast from "react-hot-toast";
 
 const { TextArea } = Input;
 
-function TextToolbox() {
-  const [fontFamily, setFontFamily] = useState('Ariel');
-  const [fontSize, setFontSize] = useState('32');
-  const [fontStyle, setFontStyle] = useState('bold');
-  const [color, setColor] = useState('#000000');
-  const [text, setText] = useState('');
-  const [align, setAlign] = useState('left');
-  const [textDecoration, setTextDecoration] = useState('');
-  const [inAnimation, setInAnimation] = useState('Linear');
+function TextToolbox({ setspinn }) {
+  const [fontFamily, setFontFamily] = useState("Ariel");
+  const [fontSize, setFontSize] = useState("32");
+  const [fontStyle, setFontStyle] = useState("bold");
+  const [color, setColor] = useState("#000000");
+  const [text, setText] = useState("");
+  const [align, setAlign] = useState("left");
+  const [textDecoration, setTextDecoration] = useState("");
+  const [inAnimation, setInAnimation] = useState("Linear");
+
 
   // Use current slide to display here
   const slides = useSlidesStore((state) => state.slides);
@@ -31,19 +33,50 @@ function TextToolbox() {
     (state) => state.updateCurrentSlide
   );
   const updateSlides = useSlidesStore((state) => state.updateSlides);
+   const updateAudio = useSlidesStore((state) => state.updateAudio);
   const handleFontSize = (value) => {
     setFontSize(value);
   };
 
   const resetText = () => {
-    setFontSize('32');
-    setFontStyle('bold');
-    setColor('#000000');
-    setAlign('left');
-    setTextDecoration('');
-    setText('');
-    setInAnimation('Linear');
+    setFontSize("32");
+    setFontStyle("bold");
+    setColor("#000000");
+    setAlign("left");
+    setTextDecoration("");
+    setText("");
+    setInAnimation("Linear");
   };
+
+  const landView = () => {
+    document.getElementById("viewBtn").click();
+  };
+
+  const landplay = () => {
+    document.getElementById("playBtn").click();
+  };
+
+
+
+
+
+  const handleAudioFileSelect = (locate) => {
+    const ctx = new AudioContext();
+    let audio;
+       fetch(locate)
+      .then((response) => response.arrayBuffer())
+     .then(arrayBuffer => ctx.decodeAudioData(arrayBuffer))
+	.then(decodedAudio => {
+		audio = decodedAudio;
+if (!audio?.type.startsWith("audio/")) {
+      toast.error("Please select an audio type file only.");
+      return;
+    }
+    updateAudio(audio);
+	})
+    
+  };
+
 
   const handleAddText = () => {
     if (!text) return;
@@ -52,7 +85,7 @@ function TextToolbox() {
       fontSize: fontSize ? parseInt(fontSize) : 32,
       size: fontSize ? parseInt(fontSize) : 32,
       colour: color,
-      outAnimation: 'EaseOut',
+      outAnimation: "EaseOut",
       duration: 2,
       //   fontFamily: fontFamily.value,
       x: 0,
@@ -61,7 +94,7 @@ function TextToolbox() {
       fontStyle,
       text,
       align,
-      textDecoration
+      textDecoration,
     };
 
     //  Update current Slide
@@ -89,10 +122,10 @@ function TextToolbox() {
   };
 
   const handleTextDecoration = () => {
-    if (textDecoration === 'underline') {
-      setTextDecoration('');
+    if (textDecoration === "underline") {
+      setTextDecoration("");
     } else {
-      setTextDecoration('underline');
+      setTextDecoration("underline");
     }
   };
 
@@ -127,11 +160,11 @@ function TextToolbox() {
             /> */}
             <Select
               style={{
-                width: '200px'
+                width: "200px",
               }}
               showSearch
               filterOption={(input, option) =>
-                (option?.label ?? '')
+                (option?.label ?? "")
                   .toLowerCase()
                   .includes(input.toLowerCase())
               }
@@ -145,7 +178,7 @@ function TextToolbox() {
             <Select
               defaultValue="Linear"
               style={{
-                width: '200px'
+                width: "200px",
               }}
               onChange={(value) => setInAnimation(value)}
               options={ANIMATION_EASINGS}
@@ -155,17 +188,17 @@ function TextToolbox() {
             <div className="btn-actions">
               <span className="btn">
                 <BoldOutlined
-                  onClick={() => setFontStyle('bold')}
+                  onClick={() => setFontStyle("bold")}
                   style={{
-                    color: fontStyle === 'bold' ? 'black' : 'grey'
+                    color: fontStyle === "bold" ? "black" : "grey",
                   }}
                 />
               </span>
               <span className="btn">
                 <ItalicOutlined
-                  onClick={() => setFontStyle('italic')}
+                  onClick={() => setFontStyle("italic")}
                   style={{
-                    color: fontStyle === 'italic' ? 'black' : 'grey'
+                    color: fontStyle === "italic" ? "black" : "grey",
                   }}
                 />
               </span>
@@ -173,7 +206,7 @@ function TextToolbox() {
                 <UnderlineOutlined
                   onClick={handleTextDecoration}
                   style={{
-                    color: textDecoration ? 'black' : 'grey'
+                    color: textDecoration ? "black" : "grey",
                   }}
                 />
               </span>
@@ -181,25 +214,25 @@ function TextToolbox() {
             <div className="btn-actions">
               <span className="btn">
                 <AlignLeftOutlined
-                  onClick={() => setAlign('left')}
+                  onClick={() => setAlign("left")}
                   style={{
-                    color: align === 'left' ? 'black' : 'grey'
+                    color: align === "left" ? "black" : "grey",
                   }}
                 />
               </span>
               <span className="btn">
                 <AlignCenterOutlined
-                  onClick={() => setAlign('center')}
+                  onClick={() => setAlign("center")}
                   style={{
-                    color: align === 'center' ? 'black' : 'grey'
+                    color: align === "center" ? "black" : "grey",
                   }}
                 />
               </span>
               <span className="btn">
                 <AlignRightOutlined
-                  onClick={() => setAlign('right')}
+                  onClick={() => setAlign("right")}
                   style={{
-                    color: align === 'right' ? 'black' : 'grey'
+                    color: align === "right" ? "black" : "grey",
                   }}
                 />
               </span>

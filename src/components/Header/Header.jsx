@@ -185,7 +185,6 @@ function Header({ handleGetStarted, previd, setprevid, setviewing }) {
             </Button> */}
 
             <Undo />
-      
           </div>
           <div className="buttons__divider" />
 
@@ -210,6 +209,7 @@ function Header({ handleGetStarted, previd, setprevid, setviewing }) {
           <Button
             className="preview_current_slide"
             disabled={isPlay || isRecording}
+            id="viewBtn"
             onClick={handlePreview}
             icon={<Play />}
           >
@@ -219,6 +219,7 @@ function Header({ handleGetStarted, previd, setprevid, setviewing }) {
             className="play_save_slides"
             disabled={isPlay || isRecording}
             onClick={handleSave}
+            id="playBtn"
             type="primary"
           >
             Play and Save
