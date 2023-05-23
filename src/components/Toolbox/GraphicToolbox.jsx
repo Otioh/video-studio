@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import "./searchBar.css";
 import useSlidesStore from "../../store/useSlidesStore";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
 // import useVideoStore from "../../store/useVideoStore";
 
 const ASPECT_RATIO = 16 / 9;
@@ -158,6 +160,18 @@ let navigate=useNavigate()
        
   };
 
+
+
+
+
+
+
+//   useEffect(()=>{
+// sceneMaker(
+//   "https://player.vimeo.com/external/330412624.hd.mp4?s=9a9c77ce40f703dcb023eca64c85e258195efa28&profile_id=174&oauth2_token_id=57447761"
+// );
+//   }, [])
+
   // const handleVideoFile = (data) => {
   //   const file = data;
   //   console.log(file);
@@ -281,7 +295,8 @@ let navigate=useNavigate()
                   <video
                     className="video"
                     key={item.video_files[0].id}
-                    
+                    draggable
+                    controls
                     width={130}
                     height={130}
                     id="my-video"
@@ -311,7 +326,8 @@ let navigate=useNavigate()
                   className="video"
                   key={item.video_files[0].id}
                   width={130}
-                  
+                  draggable
+                  controls
                   height={130}
                 >
                   <source
