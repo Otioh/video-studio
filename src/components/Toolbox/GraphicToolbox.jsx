@@ -149,7 +149,7 @@ let navigate=useNavigate()
           element.src = url;
         } else {
           element.getElementsByTagName("source")[0].src = url;
-        
+        element.loop=true
           element.play();
             setspinn(false);
             landView();

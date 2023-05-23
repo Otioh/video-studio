@@ -6,11 +6,12 @@
 // Each scene must have atleast an Image, Video and Text
 
 
-interface AIResponse{
-status:boolean;
-message?:string;
-backgroundSound:string;  
-scenes:Scene[];
+interface AIResponse {
+  status: boolean;
+  message?: string;
+  backgroundSound: string;
+  color: string;
+  scenes: Scene[];
 }
 
 
@@ -24,15 +25,16 @@ interface Scene {
 
 
 const responseJSONSameple: AIResponse = {
-  status: true,
-  message: "Video Script Generated Successfully",
-  backgroundSound: "urltoAudio.mp3",
-  scenes: [
-    {
+    status: true,
+    message: "Video Script Generated Successfully",
+    backgroundSound: "urltoAudio.mp3",  
+    color:'blue',
+    scenes: [
+        {
       text: "Some Text from AI",
       urlVideo: "URL to Video",
       urlImage: "URL to Image",
       urlAudio: "URL to Audio",
-    },
+        },
   ]
 };
