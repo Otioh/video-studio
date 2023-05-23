@@ -1,11 +1,8 @@
 import React from "react";
 import { useState, useEffect } from "react";
-// import search from "../../assets/img/search.png";
 import "./searchBar.css";
 import useSlidesStore from "../../store/useSlidesStore";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-
 // import useVideoStore from "../../store/useVideoStore";
 
 const ASPECT_RATIO = 16 / 9;
@@ -28,7 +25,6 @@ let navigate=useNavigate()
     (state) => state.updateCurrentSlide
   );
   const updateSlides = useSlidesStore((state) => state.updateSlides);
-  // console.log(data);
 
   // Load curated photos on component mount
   React.useEffect(() => {
@@ -103,62 +99,6 @@ let navigate=useNavigate()
     }
   }, [page]);
 
-  //This function is to get photos from pexels api ends here
-  // const { setVideoURL } = useVideoStore();
-  // This function is to handle image file selection REAL
-  // const handleVideoFile = (data) => {
-  //   // setVideoURL(videoLink); add videoLink as a parameter
-
-  //   fetch(data)
-  //     .then((response) => response.blob())
-  //     .then((blob) => {
-  //       const file = new File([blob], "filename.mp4", {
-  //         type: "video/mp4",
-  //       });
-  //       let isImage = file?.type?.startsWith("image/");
-  //       const url = window.URL.createObjectURL(file);
-  //       const element = document.createElement("video");
-  //       const newImage = {
-  //         id: Date.now(),
-  //         image: element,
-  //         previewImage: file,
-  //         x: 0,
-  //         y: 0,
-  //         height: DEFAULT_HEIGHT,
-  //         width: DEFAULT_HEIGHT * ASPECT_RATIO,
-  //       };
-  //       let slide = { ...currentSlide };
-  //       slide = {
-  //         ...slide,
-  //         images: [...slide.images, newImage],
-  //         previewImages: [...slide.previewImages, newImage],
-  //       };
-  //       if (!isImage) {
-  //         let source = document.createElement("source");
-  //         source.type = "video/mp4";
-  //         source.url = url;
-  //         element.appendChild(source);
-  //       }
-  //       element.onload = () => {
-  //         window.URL.revokeObjectURL(url);
-  //         // Update the slides array
-  //         const index = currentSlideIndex;
-  //         const newSlides =
-  //           slides?.map((obj, idx) => (idx === index ? slide : obj)) ?? [];
-  //         updateSlides(newSlides);
-  //       };
-  //       if (isImage) {
-  //         element.src = url;
-  //       } else {
-  //         element.getElementsByTagName("source")[0].src = url;
-  //         console.log(element);
-  //         element.play();
-  //       }
-  //       updateCurrentSlide(slide);
-  //       updateSlides();
-  //     });
-  // };
-
   const handleVideoFile = (data) => {
 
     setspinn(true)
@@ -217,24 +157,6 @@ let navigate=useNavigate()
       });
        
   };
-
-  useEffect(()=>{
-   handleVideoFile(
-     "https://player.vimeo.com/external/189545487.sd.mp4?s=8cd2af1ec08f7ce121a5a6a09c78c05237943524&profile_id=164&oauth2_token_id=57447761"
-   );
-
-
-  }, [])
-
-
-
-
-
-//   useEffect(()=>{
-// sceneMaker(
-//   "https://player.vimeo.com/external/330412624.hd.mp4?s=9a9c77ce40f703dcb023eca64c85e258195efa28&profile_id=174&oauth2_token_id=57447761"
-// );
-//   }, [])
 
   // const handleVideoFile = (data) => {
   //   const file = data;
@@ -341,32 +263,6 @@ let navigate=useNavigate()
     <>
       <div className="toolbox_title">Search Videos</div>
       <div className="image_toolbox_container">
-        {/*
-        <label htmlFor="Upload image">Image File</label>
-        <input
-          onChange={handleImageFileSelect}
-          accept="image/*"
-          type="file"
-          name=""
-          id=""
-        />
-        {currentSlide?.previewImages?.length ? (
-          <div className="image_list">
-            {currentSlide?.previewImages?.map((img, i) => (
-              <div className="image_item" key={i}>
-                <img
-                  alt="preview"
-                  src={URL.createObjectURL(img.previewImage)}
-                  width="60"
-                  height="60"
-                />
-                <DeleteOutlined onClick={() => deleteImageItem(i)} />
-              </div>
-            ))}
-          </div>
-        ) : (
-          ''
-        )} */}
         <input
           className="input-select"
           onKeyPress={handleSearch}
@@ -385,8 +281,7 @@ let navigate=useNavigate()
                   <video
                     className="video"
                     key={item.video_files[0].id}
-                    draggable
-                    controls
+                    
                     width={130}
                     height={130}
                     id="my-video"
@@ -416,8 +311,7 @@ let navigate=useNavigate()
                   className="video"
                   key={item.video_files[0].id}
                   width={130}
-                  draggable
-                  controls
+                  
                   height={130}
                 >
                   <source

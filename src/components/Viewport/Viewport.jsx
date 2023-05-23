@@ -2,20 +2,15 @@ import Konva from "konva";
 import React, { useEffect, useRef, useState } from "react";
 import { Layer, Rect, Stage, Text } from "react-konva";
 import useSlidesStore from "../../store/useSlidesStore";
-// import useVideoStore from "../../store/useVideoStore";
 import ResizableImage from "../ImageResize/ResizableImage";
 import "./Viewport.scss";
-import Video from "./CanvasVideoViewer";
-import { DeleteOutlined } from "@ant-design/icons";
-import record from "canvas-to-video";
-
-
 
 function Viewport({previd, setprevid, viewing, setviewing}) {
   const [dimensions, setDimensions] = useState({
     width: 0,
     height: 0,
   });
+
 
 
 
@@ -65,16 +60,13 @@ function Viewport({previd, setprevid, viewing, setviewing}) {
       slides?.map((obj, i) => (idx === idx ? newSlide : obj)) ?? [];
     updateSlides(newSlides);
   };
-  
 
- const [id, setid] = useState();
+  const [id, setid] = useState();
   const handleDelete = () => {
     const rect = document.getElementById(id);
     rect?.remove();
     rect?.getLayer().batchDraw();
   };
-
- 
 
   // This function is called after text dragging is ended
   const handleTextDragEnd = (event, index) => {
@@ -230,44 +222,12 @@ function Viewport({previd, setprevid, viewing, setviewing}) {
     updateSlides([currentSlide]);
   };
 
-  const canva = document.getElementsByTagName("canvas")[0];
+  // const canva = document.getElementsByTagName("canvas")[0];
 
   // const { currentVideoURL } = useVideoStore();
 
-  const video = videoRef.current;
-  // RENDER VIDEO ON CANVAS
-  // useEffect(() => {
-  //   if (!canva) return;
-  //   canva.setAttribute("id", "myCanva");
-  //   const context = canva.getContext("2d");
+  // const video = videoRef.current;
 
-  //   const renderVideoFrame = () => {
-  //     context.drawImage(video, 0, 0, canva.width, canva.height);
-  //     requestAnimationFrame(renderVideoFrame);
-  //   };
-
-  //   video?.addEventListener("play", renderVideoFrame);
-  //   video?.play();
-  //   return () => {
-  //     video?.removeEventListener("play", renderVideoFrame);
-  //   };
-  // }, [canva]);
-
-  // useEffect(() => {
-  //   video?.play();
-  // }, [video, currentVideoURL]);
-
-  // const handlePlay = () => {
-  //   if (video) {
-  //     if (video.paused) {
-  //       video.play();
-  //       setPlayText("Pause");
-  //     } else {
-  //       setPlayText("Play");
-  //       video.pause();
-  //     }
-  //   }
-  // };
   return (
     <div ref={divRef} className="viewport">
       {viewing && (
@@ -342,13 +302,6 @@ function Viewport({previd, setprevid, viewing, setviewing}) {
                 />
               </React.Fragment>
             ))}
-            {/* {currentSlide?.videos?.map((video, i) => {
-            return (
-              <React.Fragment key={i}>
-                <Video src={video.video_files[0].link} />
-              </React.Fragment>
-            );
-          })} */}
             {currentSlide?.texts.map((text, i) => (
               <Text
                 key={i}
@@ -409,22 +362,6 @@ function Viewport({previd, setprevid, viewing, setviewing}) {
           </Layer>
         </Stage>
       </>
-
-      {/* <video
-        id="myVideo"
-        ref={videoRef}
-        autoPlay={true}
-        muted
-        loop
-        controls
-        hidden
-         src={currentVideoURL}
-      /> */}
-
-      {/* TODO MAKE THIS VISIBLE ONLY ON THE VIDEO TAB */}
-      {/* <button onClick={handlePlay} type="button" className="button-18">
-        {playText}
-      </button> */}
     </div>
   );
 }
