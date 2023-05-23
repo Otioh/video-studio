@@ -14,6 +14,7 @@ function Editor({ previd, setprevid }) {
   const [activeItem, setActiveItem] = useState("text");
   const [stepsEnabled, setStepsEnabled] = useState(false);
   const [viewing, setviewing] = useState(false);
+  
 
 
 const [spinn, setspinn] = useState(false);
@@ -61,7 +62,7 @@ const [spinn, setspinn] = useState(false);
               setprevid={setprevid}
               viewing={viewing}
               setviewing={setviewing}
-            
+              setspinn={setspinn}
             />
             <Toolbox activeItem={activeItem} setspinn={setspinn} />
           </div>

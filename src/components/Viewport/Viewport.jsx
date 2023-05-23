@@ -61,6 +61,11 @@ function Viewport({previd, setprevid, viewing, setviewing}) {
     updateSlides(newSlides);
   };
 
+
+
+
+
+  
   const [id, setid] = useState();
   const handleDelete = () => {
     const rect = document.getElementById(id);
@@ -230,6 +235,7 @@ function Viewport({previd, setprevid, viewing, setviewing}) {
 
   return (
     <div ref={divRef} className="viewport">
+ 
       {viewing && (
         <div
           style={{

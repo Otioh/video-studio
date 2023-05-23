@@ -1,7 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 import './App.scss';
 import Editor from './Pages/Editor';
-
+import Form from './Pages/Form';
 import { Toaster } from 'react-hot-toast';
 import Studio from './Pages/Studio';
 import { useState } from 'react';
@@ -18,7 +18,7 @@ function App() {
         <Route path={'/*'} element={<NotFound  />} />
         <Route path={'/AI-Interface'} element={<AIInterface />} />
 
-        <Route path="/" element={<Editor previd={previd} setprevid={setprevid} />} />
+        <Route path="/" element={<Form/>} />
       </Routes>
       <Toaster />
     </div>

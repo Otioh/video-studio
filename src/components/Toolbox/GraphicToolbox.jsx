@@ -153,7 +153,7 @@ let navigate=useNavigate()
           element.play();
             setspinn(false);
             landView();
-            landplay();
+            // landplay();
         }
         updateCurrentSlide(slide);
       });

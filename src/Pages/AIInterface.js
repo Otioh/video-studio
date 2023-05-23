@@ -28,10 +28,35 @@ function AIInterface() {
     };
 
 
+    function getAudioBlobFromURL(url) {
+        return new Promise((resolve, reject) => {
+            fetch(url)
+                .then(response => response.blob())
+                .then(blob => resolve(blob))
+                .catch(error => reject(error));
+        });
+    }
+    const URLS = 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/123941/Yodel_Sound_Effect.mp3';
+
+
+ 
+
+
+
+   
+
+
+    // function play(audioBuffer) {
+    //     const source = context.createBufferSource();
+    //     source.buffer = audioBuffer;
+    //     source.connect(context.destination);
+    //     source.start();
+    // }
+
     const handleVideoFile = (data) => {
    
         const locate = data;
-        console.log(locate);
+     
         fetch(locate)
             .then((response) => response.blob())
             .then((blob) => {
@@ -75,13 +100,13 @@ function AIInterface() {
                     element.src = url;
                 } else {
                     element.getElementsByTagName("source")[0].src = url;
-              
+                 
                     funSeque({ delaySeconds: 2 }, () => {
                         navigate('/')
+                    },()=>{
+                        element.play()
                     },
-                        () => {
-                            element.play()
-                        },
+                     
                         () => {
                             landView();
                         })
@@ -93,21 +118,34 @@ function AIInterface() {
     };
 
 
+useEffect(()=>{
+    funSeque({ delaySeconds: 2 }, () => {
+        navigate('/')
+    }, () => {
+
+     
+    },  () => {
+       
+        handleVideoFile("https://player.vimeo.com/external/189545487.sd.mp4?s=8cd2af1ec08f7ce121a5a6a09c78c05237943524&profile_id=164&oauth2_token_id=57447761"
+           )
+    },
+
+        () => {
+            landView();
+        })
+}, [])
 
 
 
 
 
-    useEffect(() => {
-        handleVideoFile(
-            "https://player.vimeo.com/external/189545487.sd.mp4?s=8cd2af1ec08f7ce121a5a6a09c78c05237943524&profile_id=164&oauth2_token_id=57447761"
-        );
 
-        // handleAudioFileSelect(
-        //   "https://cdn.trendybeatz.com/audio/Psinach-I-Know-[TrendyBeatz.com].mp3"
-        // );
 
-    }, []);
+
+
+
+  
+
 
 
 

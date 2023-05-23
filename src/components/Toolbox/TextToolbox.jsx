@@ -25,12 +25,20 @@ function TextToolbox({ setspinn }) {
   const [inAnimation, setInAnimation] = useState("Linear");
 
   // Use current slide to display here
+
+  const ASPECT_RATIO = 16 / 9;
+  const DEFAULT_HEIGHT = 400;
   const slides = useSlidesStore((state) => state.slides);
   const currentSlide = useSlidesStore((state) => state.currentSlide);
   const currentSlideIndex = useSlidesStore((state) => state.currentSlideIndex);
   const updateCurrentSlide = useSlidesStore(
     (state) => state.updateCurrentSlide
   );
+
+    const AIResponse = useSlidesStore((state) => state.AIResponse);
+    const updateAIResponse = useSlidesStore((state) => state.updateAIResponse);
+   
+    
   const updateSlides = useSlidesStore((state) => state.updateSlides);
    const updateAudio = useSlidesStore((state) => state.updateAudio);
   const handleFontSize = (value) => {
@@ -58,23 +66,97 @@ function TextToolbox({ setspinn }) {
 
 
 
+  const handleVideoFile = (data) => {
+    setspinn(true);
+    const locate = data;
+    console.log(locate);
+    fetch(locate)
+      .then((response) => response.blob())
+      .then((blob) => {
+        const file = new File([blob], "filename.mp4", {
+          type: "video/mp4",
+        });
+        let isImage = file?.type?.startsWith("image/");
+        const url = window.URL.createObjectURL(file);
+        const element = document.createElement("video");
+        const newImage = {
+          id: Date.now(),
+          image: element,
+          previewImage: file,
+          x: 0,
+          y: 0,
+          height: DEFAULT_HEIGHT,
+          width: DEFAULT_HEIGHT * ASPECT_RATIO,
+        };
+        let slide = { ...currentSlide };
+        slide = {
+          ...slide,
+          images: [...slide.images, newImage],
+          previewImages: [...slide.previewImages, newImage],
+        };
+        if (!isImage) {
+          let source = document.createElement("source");
+          source.type = "video/mp4";
+          source.url = url;
+          element.appendChild(source);
+        }
+        element.onload = () => {
+          window.URL.revokeObjectURL(url);
+          // Update the slides array
+          const index = currentSlideIndex;
+          const newSlides =
+            slides?.map((obj, idx) => (idx === index ? slide : obj)) ?? [];
+          updateSlides(newSlides);
+        };
+        if (isImage) {
+          element.src = url;
+        } else {
+          
+          element.getElementsByTagName("source")[0].src = url;
+          setText(AIResponse.text);
+          setTimeout(() => {
+            document.getElementById("addtxt").click();
+          }, 1000);
+      
 
-  const handleAudioFileSelect = (locate) => {
-    const ctx = new AudioContext();
-    let audio;
-       fetch(locate)
-      .then((response) => response.arrayBuffer())
-     .then(arrayBuffer => ctx.decodeAudioData(arrayBuffer))
-	.then(decodedAudio => {
-		audio = decodedAudio;
-if (!audio?.type.startsWith("audio/")) {
-      toast.error("Please select an audio type file only.");
-      return;
-    }
-    updateAudio(audio);
-	})
-    
+          element.play();
+          setspinn(false);
+          landView();
+          landplay();
+        }
+        updateCurrentSlide(slide);
+      });
   };
+
+
+
+
+    function getAudioBlobFromURL(url) {
+      return new Promise((resolve, reject) => {
+        fetch(url)
+          .then((response) => response.blob())
+          .then((blob) => resolve(blob))
+          .catch((error) => reject(error));
+      });
+    }
+    
+      
+    useEffect(()=>{
+      if (AIResponse.status){
+
+        getAudioBlobFromURL(AIResponse.urlAudio)
+          .then((blob) => {
+            // Do something with the audio blob
+            updateAudio(blob);
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+      }
+    }, [])
+    
+
+ 
 
 
   const handleAddText = () => {
@@ -131,6 +213,45 @@ if (!audio?.type.startsWith("audio/")) {
   return (
     <>
       <div className="toolbox_title">Text Properties</div>
+      {AIResponse.status && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            zIndex: 200,
+            backgroundColor: "rgba(0,0,0,0.5)",
+            height: "100vh",
+            width: "100vw",
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          <button
+            className="play_save_slides"
+            style={{alignSelf:'flex-start', border:'solid 1px red', borderRadius:'7px', padding:'10px', color:'red'}}
+            id="playBtn"
+            onClick={() => {
+              updateAIResponse({ ...AIResponse, status: false });
+            }}
+          >
+            Cancel
+          </button>
+          <Button
+            className="play_save_slides"
+            id="playBtn"
+            type="primary"
+            onClick={() => {
+              handleVideoFile(AIResponse.urlVideo);
+              updateAIResponse({ ...AIResponse, status: false });
+             
+            }}
+          >
+            Build AI Generated Video
+          </Button>
+        </div>
+      )}
+
       <div>
         <TextArea
           size="24"
@@ -235,9 +356,10 @@ if (!audio?.type.startsWith("audio/")) {
             />
           </div>
           <div className="stylebox_actions_btngrp">
-            <Button type="primary" onClick={handleAddText}>
+            <Button type="primary" id='addtxt' onClick={handleAddText}>
               Add Text
             </Button>
+        
           </div>
         </div>
       </div>
