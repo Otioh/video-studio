@@ -37,7 +37,7 @@ export const DEFAULT_SLIDE_OBJECT = {
   duration: 5,
 
   videos: [],
-  previewVideos: [],
+  previewVideos: [], 
 };
 
 export const INTRO_STEPS = [

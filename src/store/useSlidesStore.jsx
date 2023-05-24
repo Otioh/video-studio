@@ -4,14 +4,15 @@ import { DEFAULT_SLIDE_OBJECT } from '../utils/constants';
 const useSlidesStore = create((set) => ({
   slides: [DEFAULT_SLIDE_OBJECT],
   currentSlide: DEFAULT_SLIDE_OBJECT,
+  localMedia: [],
   play: false,
   currentSlideIndex: 0,
   totalDuration: 15,
   audio: null,
   isRecording: false,
   AIResponse: {
-    status: true,
-    text:"Some AI Genegerated Content Here...",
+    error: true,
+    text: "Some AI Genegerated Content Here...",
     urlVideo:
       "https://player.vimeo.com/external/189545487.sd.mp4?s=8cd2af1ec08f7ce121a5a6a09c78c05237943524&profile_id=164&oauth2_token_id=57447761",
     urlAudio:
@@ -25,6 +26,9 @@ const useSlidesStore = create((set) => ({
     })),
 
   updateSlides: (slides) => set((state) => ({ slides: slides })),
+  updateLocalMedia: (localMedia) =>
+    set((state) => ({ localMedia: localMedia })),
+
   updateCurrentSlide: (currentSlide) => set((state) => ({ currentSlide })),
   updateCurrentSlideIndex: (index) =>
     set((state) => ({ currentSlideIndex: index })),

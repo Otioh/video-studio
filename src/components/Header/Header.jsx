@@ -149,12 +149,13 @@ function Header({ handleGetStarted, previd, setprevid, setviewing }) {
 
   // This function is used to handle the play and save
   const handleSave = async () => {
-    setviewing(true);
+    
     if (!audioSelected) {
       toast.error("Please select an audio file first");
       return;
     }
     handlePlayCompleteVideo();
+    setviewing(true);
   };
 
   const handleBackClick = () => {

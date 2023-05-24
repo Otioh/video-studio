@@ -11,12 +11,13 @@ import {
 import { ANIMATION_EASINGS, FONT_OPTIONS } from '../../utils/constants';
 import useSlidesStore from '../../store/useSlidesStore';
 import toast from "react-hot-toast";
+import mp3Files from "./musicLink";
 
 const { TextArea } = Input;
 
 function TextToolbox({ setspinn }) {
   const [fontFamily, setFontFamily] = useState("Ariel");
-  const [fontSize, setFontSize] = useState("32");
+  const [fontSize, setFontSize] = useState("19");
   const [fontStyle, setFontStyle] = useState("bold");
   const [color, setColor] = useState("#000000");
   const [text, setText] = useState("");
@@ -27,7 +28,7 @@ function TextToolbox({ setspinn }) {
   // Use current slide to display here
 
   const ASPECT_RATIO = 16 / 9;
-  const DEFAULT_HEIGHT = 400;
+  const DEFAULT_HEIGHT = 500;
   const slides = useSlidesStore((state) => state.slides);
   const currentSlide = useSlidesStore((state) => state.currentSlide);
   const currentSlideIndex = useSlidesStore((state) => state.currentSlideIndex);
@@ -37,10 +38,11 @@ function TextToolbox({ setspinn }) {
 
     const AIResponse = useSlidesStore((state) => state.AIResponse);
     const updateAIResponse = useSlidesStore((state) => state.updateAIResponse);
-   
+    const addNewSlide = useSlidesStore((state) => state.addNewSlide);
     
   const updateSlides = useSlidesStore((state) => state.updateSlides);
    const updateAudio = useSlidesStore((state) => state.updateAudio);
+   let count = AIResponse?.scenes?.length;
   const handleFontSize = (value) => {
     setFontSize(value);
   };
@@ -66,10 +68,10 @@ function TextToolbox({ setspinn }) {
 
 
 
-  const handleVideoFile = (data) => {
+  const handleVideoFile = (data, text) => {
     setspinn(true);
     const locate = data;
-    console.log(locate);
+    
     fetch(locate)
       .then((response) => response.blob())
       .then((blob) => {
@@ -101,30 +103,36 @@ function TextToolbox({ setspinn }) {
           element.appendChild(source);
         }
         element.onload = () => {
+      
           window.URL.revokeObjectURL(url);
           // Update the slides array
           const index = currentSlideIndex;
           const newSlides =
             slides?.map((obj, idx) => (idx === index ? slide : obj)) ?? [];
           updateSlides(newSlides);
+           
+            
+          
         };
         if (isImage) {
           element.src = url;
         } else {
           
           element.getElementsByTagName("source")[0].src = url;
-          setText(AIResponse.text);
+          setText(text);
           setTimeout(() => {
             document.getElementById("addtxt").click();
           }, 1000);
       
 
           element.play();
-          setspinn(false);
-          landView();
-          landplay();
+            landplay(); 
+     
         }
         updateCurrentSlide(slide);
+         setspinn(false);
+         landView();
+
       });
   };
 
@@ -142,9 +150,9 @@ function TextToolbox({ setspinn }) {
     
       
     useEffect(()=>{
-      if (AIResponse.status){
+      if (!AIResponse.error){
 
-        getAudioBlobFromURL(AIResponse.urlAudio)
+        getAudioBlobFromURL(mp3Files[Math.floor(Math.random() * 26)].url)
           .then((blob) => {
             // Do something with the audio blob
             updateAudio(blob);
@@ -163,14 +171,14 @@ function TextToolbox({ setspinn }) {
     if (!text) return;
     const textNode = {
       id: Date.now(),
-      fontSize: fontSize ? parseInt(fontSize) : 32,
-      size: fontSize ? parseInt(fontSize) : 32,
+      fontSize: fontSize ? parseInt(fontSize) : 19,
+      size: fontSize ? parseInt(fontSize) : 19,
       colour: color,
       outAnimation: "EaseOut",
       duration: 2,
       //   fontFamily: fontFamily.value,
-      x: 0,
-      y: 0,
+      x: 10,
+      y: 500,
       inAnimation,
       fontStyle,
       text,
@@ -197,6 +205,12 @@ function TextToolbox({ setspinn }) {
     }, 100);
   };
 
+
+
+
+
+
+
   const handleTextChange = (event) => {
     const { value } = event.target;
     setText(value);
@@ -213,7 +227,7 @@ function TextToolbox({ setspinn }) {
   return (
     <>
       <div className="toolbox_title">Text Properties</div>
-      {AIResponse.status && (
+      {!AIResponse.error && (
         <div
           style={{
             position: "fixed",
@@ -232,7 +246,7 @@ function TextToolbox({ setspinn }) {
             style={{alignSelf:'flex-start', border:'solid 1px red', borderRadius:'7px', padding:'10px', color:'red'}}
             id="playBtn"
             onClick={() => {
-              updateAIResponse({ ...AIResponse, status: false });
+              updateAIResponse({ ...AIResponse, error: true });
             }}
           >
             Cancel
@@ -242,8 +256,14 @@ function TextToolbox({ setspinn }) {
             id="playBtn"
             type="primary"
             onClick={() => {
-              handleVideoFile(AIResponse.urlVideo);
-              updateAIResponse({ ...AIResponse, status: false });
+
+
+ handleVideoFile(AIResponse.scenes[0]?.urlVideo, AIResponse.scenes[0]?.text);
+
+        
+
+
+              updateAIResponse({ ...AIResponse, error: true });
              
             }}
           >
@@ -277,7 +297,7 @@ function TextToolbox({ setspinn }) {
                   .toLowerCase()
                   .includes(input.toLowerCase())
               }
-              defaultValue="32"
+              defaultValue="19"
               value={fontSize}
               onChange={handleFontSize}
               options={FONT_OPTIONS}

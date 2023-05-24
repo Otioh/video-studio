@@ -268,7 +268,7 @@ function Viewport({previd, setprevid, viewing, setviewing}) {
             }}
           >
             Please Wait
-            <video controls src={previd}></video>
+            <video controls src={previd} loop autoPlay></video>
           </div>
         </div>
       )}
