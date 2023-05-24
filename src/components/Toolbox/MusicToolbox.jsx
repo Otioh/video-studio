@@ -2,15 +2,16 @@ import React from "react";
 import { useState, useEffect } from "react";
 import "./searchBar.css";
 import useSlidesStore from "../../store/useSlidesStore";
+import mp3Files from "./musicLink";
 
 const ASPECT_RATIO = 16 / 9;
 const DEFAULT_HEIGHT = 250;
 
 const MusicToolbox = () => {
-  const [loading, setLoading] = useState(true);
-  const [data, setData] = useState([]);
-  const [query, setQuery] = useState("Artificial Intelligence");
-  const [pageUrl, setPageUrl] = useState("");
+  // const [loading, setLoading] = useState(true);
+  // const [data, setData] = useState([]);
+  // const [query, setQuery] = useState("Artificial Intelligence");
+  // const [pageUrl, setPageUrl] = useState("");
 
   // Use current slide to display here
   const slides = useSlidesStore((state) => state.slides);
@@ -20,41 +21,41 @@ const MusicToolbox = () => {
     (state) => state.updateCurrentSlide
   );
   const updateSlides = useSlidesStore((state) => state.updateSlides);
-  console.log(data);
+  // console.log(data);
 
   //This function is to get photos from pexels api starts here
-  const getVideos = async () => {
-    setLoading(true);
-    await fetch(
-      pageUrl
-        ? pageUrl
-        : `https://api.pexels.com/videos/search?per_page=12&query=${query}`,
-      {
-        headers: {
-          Authorization:
-            "JERuP3DyRWnvRki7QMAEoWwXveDZw4RWsSwrT5IyMXRHcOiGRGvsK6gC",
-        },
-      }
-    )
-      .then((resp) => {
-        return resp.json();
-      })
-      .then((res) => {
-        setLoading(false);
-        setData(res.videos);
-        setPageUrl(res.next_page);
-      });
-  };
+  // const getVideos = async () => {
+  //   setLoading(true);
+  //   await fetch(
+  //     pageUrl
+  //       ? pageUrl
+  //       : `https://api.pexels.com/videos/search?per_page=12&query=${query}`,
+  //     {
+  //       headers: {
+  //         Authorization:
+  //           "JERuP3DyRWnvRki7QMAEoWwXveDZw4RWsSwrT5IyMXRHcOiGRGvsK6gC",
+  //       },
+  //     }
+  //   )
+  //     .then((resp) => {
+  //       return resp.json();
+  //     })
+  //     .then((res) => {
+  //       setLoading(false);
+  //       setData(res.videos);
+  //       setPageUrl(res.next_page);
+  //     });
+  // };
 
-  useEffect(() => {
-    getVideos();
-  }, []);
+  // useEffect(() => {
+  //   getVideos();
+  // }, []);
 
-  const onKeyDownHandler = (e) => {
-    if (e.keyCode === 13) {
-      getVideos();
-    }
-  };
+  // const onKeyDownHandler = (e) => {
+  //   if (e.keyCode === 13) {
+  //     getVideos();
+  //   }
+  // };
   //This function is to get photos from pexels api ends here
 
   // This function is to handle image file selection
@@ -94,17 +95,26 @@ const MusicToolbox = () => {
     <>
       <div className="toolbox_title">Search Music</div>
       <div className="image_toolbox_container">
-        <input
+        {/* <input
           className="input-select"
           onKeyDown={onKeyDownHandler}
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           type="text"
           placeholder="Search Here"
-        />
-        {loading && <h5>Fetching Music...</h5>}
-        <div className="card">
-          {data?.map((item, index) => {
+        /> */}
+        {/* {loading && <h5>Fetching Music...</h5>} */}
+        <div className="">
+          {mp3Files.map((file, index) => (
+            <div key={index}>
+              <audio controls className="music">
+                <source src={file.url} type="audio/mpeg" />
+              </audio>
+              <img src={file.coverImage} alt={file.title} />
+            </div>
+          ))}
+
+          {/* {data?.map((item, index) => {
             return (
               <a href={item.link}>
                 <video
@@ -119,11 +129,11 @@ const MusicToolbox = () => {
                 </video>
               </a>
             );
-          })}
+          })} */}
         </div>
-        <button onClick={getVideos} className="ant-btn ant-btn-primary">
+        {/* <button onClick={getVideos} className="ant-btn ant-btn-primary">
           Load More
-        </button>
+        </button> */}
       </div>
     </>
   );

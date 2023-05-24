@@ -46,6 +46,9 @@ input:focus {
   grid-column-gap: 5px;
   grid-row-gap: 10px;
 }
+.music {
+  width: 90%;
+}
 .ant-btn-primary {
   margin-left: auto;
   margin-right: auto;
