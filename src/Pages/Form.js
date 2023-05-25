@@ -21,13 +21,14 @@ setspinning(true)
       setspintext("Please wait while we gather resources")
       console.log(res.data)
       if(!res.data.error){
-let newArr=res.data.scenes.map((scene)=>{
-  return { ...scene, urlVideo:'http://localhost:3000/static/media/eating-healthy.ab23f3c14fd222ad2c36.mp4'}
-})
+// let newArr=res.data.scenes.map((scene)=>{
+//   return { ...scene, urlVideo:'http://localhost:3000/static/media/eating-healthy.ab23f3c14fd222ad2c36.mp4'}
+// })
 
 
         notification.success({ message: res.data.message })
-        updateAIResponse({ ...res.data, scenes: newArr })
+        // updateAIResponse({ ...res.data, scenes: newArr })
+        updateAIResponse(res.data)
         navigate('/editor')
        
         setspinning(false)

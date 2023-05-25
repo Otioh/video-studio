@@ -126,7 +126,7 @@ function TextToolbox({ setspinn }) {
       
 
           element.play();
-            landplay(); 
+        
      
         }
         updateCurrentSlide(slide);
