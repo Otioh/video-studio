@@ -99,6 +99,42 @@ const mp3Files = [
     id: 25,
     url: "https://res.cloudinary.com/dhk9clnxe/video/upload/v1684943580/Music/happy-monk-in-the-garden-strings-reverb-26755_jtzjhk.mp3",
   },
+  {
+    id: 26,
+    url: "https://res.cloudinary.com/dhk9clnxe/video/upload/v1685019349/Music/catch-it-117676_f9lfsy.mp3",
+  },
+  {
+    id: 27,
+    url: "https://res.cloudinary.com/dhk9clnxe/video/upload/v1685019348/Music/tropical-summer-music-112842_lyho4o.mp3",
+  },
+  {
+    id: 28,
+    url: "https://res.cloudinary.com/dhk9clnxe/video/upload/v1685019348/Music/happy-acoustic-guitar-background-music-122614_utuscm.mp3",
+  },
+  {
+    id: 29,
+    url: "https://res.cloudinary.com/dhk9clnxe/video/upload/v1685019347/Music/sunshine-108600_ycrrus.mp3",
+  },
+  {
+    id: 30,
+    url: "https://res.cloudinary.com/dhk9clnxe/video/upload/v1685019346/Music/happy-day-113985_mwayt5.mp3",
+  },
+  {
+    id: 31,
+    url: "https://res.cloudinary.com/dhk9clnxe/video/upload/v1685019345/Music/guitar-electro-sport-trailer-115571_ufts4x.mp3",
+  },
+  {
+    id: 32,
+    url: " https://res.cloudinary.com/dhk9clnxe/video/upload/v1685019343/Music/a-small-miracle-132333_q33ku8.mp3",
+  },
+  {
+    id: 33,
+    url: "https://res.cloudinary.com/dhk9clnxe/video/upload/v1685019339/Music/embrace-12278_pipcas.mp3",
+  },
+  {
+    id: 34,
+    url: "https://res.cloudinary.com/dhk9clnxe/video/upload/v1685019338/Music/simple-piano-melody-9834_qebrza.mp3",
+  },
 ];
 
 const jsonContent = JSON.stringify(mp3Files);

@@ -3,17 +3,12 @@ import React, { useState, useEffect } from "react";
 import useSlidesStore from "../../store/useSlidesStore";
 import "../Toolbox/searchBar.css";
 import axios from "axios";
-import {funSeque} from 'flame-tools'
+import { funSeque } from "flame-tools";
 
 const ASPECT_RATIO = 16 / 9;
 const DEFAULT_HEIGHT = 250;
 const API_KEY = "JERuP3DyRWnvRki7QMAEoWwXveDZw4RWsSwrT5IyMXRHcOiGRGvsK6gC";
 const API_URL = "https://api.pexels.com/v1/search";
-
-
-
-
-
 
 function MediaToolbox({ setspinn }) {
   const [curatedPhotos, setCuratedPhotos] = useState([]);
@@ -102,12 +97,11 @@ function MediaToolbox({ setspinn }) {
 
   //scene maker
   function sceneMaker(url) {
-    console.log('first')
-    setspinn(true)
+    console.log("first");
+    setspinn(true);
     fetch(url)
       .then((response) => response.blob())
       .then((blob) => {
-   
         const file = new File([blob], "filename", { type: blob.type });
         const url = window.URL.createObjectURL(file);
         const img = new window.Image();
@@ -130,33 +124,20 @@ function MediaToolbox({ setspinn }) {
         img.onload = () => {
           window.URL.revokeObjectURL(url);
           // Update the slides array
-       
-      
-      
-    if (slides[slides.length - 1].id===slide.id){
 
-    }else{
-    slides.push(slide);
-        updateSlides(slides);
-    }
-      // slides?.map((obj, idx) => (idx === index ? slide : obj)) ?? [];
-  
-        
+          if (slides[slides.length - 1].id === slide.id) {
+          } else {
+            slides.push(slide);
+            updateSlides(slides);
+          }
+          // slides?.map((obj, idx) => (idx === index ? slide : obj)) ?? [];
         };
         img.src = url;
-   
-         setspinn(false);
+
+        setspinn(false);
         updateSlides();
       });
   }
-
-//   useEffect(() => {
-
-  
-// sceneMaker(
-//   "https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Eden_Hazard_at_Baku_before_2019_UEFA_Europe_League_Final.jpg/220px-Eden_Hazard_at_Baku_before_2019_UEFA_Europe_League_Final.jpg"
-// );
-//   }, []);
 
   // This function is to handle image file selection
   const handleImageFileSelect = (event) => {

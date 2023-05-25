@@ -18,7 +18,7 @@ const GraphicToolbox = ({ setspinn }) => {
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   console.log(searchResults);
-let navigate=useNavigate()
+  let navigate = useNavigate();
   // Use current slide to display here
   const slides = useSlidesStore((state) => state.slides);
   const currentSlide = useSlidesStore((state) => state.currentSlide);
@@ -66,14 +66,13 @@ let navigate=useNavigate()
     }
   };
 
+  const landView = () => {
+    document.getElementById("viewBtn").click();
+  };
 
-  const landView=()=>{
-    document.getElementById('viewBtn').click()
-  }
-
-   const landplay = () => {
-     document.getElementById("playBtn").click();
-   };
+  const landplay = () => {
+    document.getElementById("playBtn").click();
+  };
 
   const handleLoadMore = async () => {
     setPage(page + 1);
@@ -102,8 +101,7 @@ let navigate=useNavigate()
   }, [page]);
 
   const handleVideoFile = (data) => {
-
-    setspinn(true)
+    setspinn(true);
     const locate = data;
     console.log(locate);
     fetch(locate)
@@ -143,135 +141,20 @@ let navigate=useNavigate()
           const newSlides =
             slides?.map((obj, idx) => (idx === index ? slide : obj)) ?? [];
           updateSlides(newSlides);
-         
         };
         if (isImage) {
           element.src = url;
         } else {
           element.getElementsByTagName("source")[0].src = url;
-        element.loop=true
+          element.loop = true;
           element.play();
-            setspinn(false);
-            landView();
-            // landplay();
+          setspinn(false);
+          landView();
+          // landplay();
         }
         updateCurrentSlide(slide);
       });
-       
   };
-
-
-
-
-
-
-
-//   useEffect(()=>{
-// sceneMaker(
-//   "https://player.vimeo.com/external/330412624.hd.mp4?s=9a9c77ce40f703dcb023eca64c85e258195efa28&profile_id=174&oauth2_token_id=57447761"
-// );
-//   }, [])
-
-  // const handleVideoFile = (data) => {
-  //   const file = data;
-  //   console.log(file);
-
-  //   let isImage = file?.type?.startsWith("image/");
-  //   const url = window.URL.createObjectURL(file);
-  //   const element = isImage
-  //     ? new window.Image()
-  //     : document.createElement("video");
-  //   const newImage = {
-  //     id: Date.now(),
-  //     image: element,
-  //     previewImage: file,
-  //     x: 0,
-  //     y: 0,
-  //     height: DEFAULT_HEIGHT,
-  //     width: DEFAULT_HEIGHT * ASPECT_RATIO,
-  //   };
-  //   let slide = { ...currentSlide };
-  //   slide = {
-  //     ...slide,
-  //     images: [...slide.images, newImage],
-  //     previewImages: [...slide.previewImages, newImage],
-  //   };
-  //   if (!isImage) {
-  //     let source = document.createElement("source");
-  //     source.type = "video/ogg";
-  //     source.url = url;
-  //     element.appendChild(source);
-  //   }
-  //   element.onload = () => {
-  //     window.URL.revokeObjectURL(url);
-  //     // Update the slides array
-  //     const index = currentSlideIndex;
-  //     const newSlides =
-  //       slides?.map((obj, idx) => (idx === index ? slide : obj)) ?? [];
-  //     updateSlides(newSlides);
-  //   };
-  //   if (isImage) {
-  //     element.src = url;
-  //   } else {
-  //     element.getElementsByTagName("source")[0].src = url;
-  //     element.play();
-  //   }
-  //   updateCurrentSlide(slide);
-  //   updateSlides();
-  // };
-  // const handleImageFileSelect = (event) => {
-  //   const file = event.target.files[0];
-  //   if (!file?.type?.startsWith("image/")) {
-  //     console.log("Please select an image file.");
-  //     return;
-  //   }
-  //   const url = window.URL.createObjectURL(file);
-  //   const img = new window.Image();
-  //   const newImage = {
-  //     id: Date.now(),
-  //     image: img,
-  //     previewImage: file,
-  //     x: 0,
-  //     y: 0,
-  //     height: DEFAULT_HEIGHT,
-  //     width: DEFAULT_HEIGHT * ASPECT_RATIO,
-  //   };
-  //   let slide = { ...currentSlide };
-  //   slide = {
-  //     ...slide,
-  //     images: [...slide.images, newImage],
-  //     previewImages: [...slide.previewImages, newImage],
-  //   };
-  //   img.onload = () => {
-  //     window.URL.revokeObjectURL(url);
-  //     // Update the slides array
-  //     const index = currentSlideIndex;
-  //     const newSlides =
-  //       slides?.map((obj, idx) => (idx === index ? slide : obj)) ?? [];
-  //     updateSlides(newSlides);
-  //   };
-  //   img.src = url;
-  //   updateCurrentSlide(slide);
-  //   updateSlides();
-  // };
-
-  // This function is used to delete the image media on click of delete
-  // const deleteImageItem = (index) => {
-  //   const newImageList = [...currentSlide.images];
-  //   newImageList.splice(index, 1);
-  //   const newPreviewImageList = [...currentSlide.previewImages];
-  //   newPreviewImageList.splice(index, 1);
-  //   const newSlide = {
-  //     ...currentSlide,
-  //     images: newImageList,
-  //     previewImages: newPreviewImageList,
-  //   };
-  //   updateCurrentSlide(newSlide);
-  //   const idx = currentSlideIndex;
-  //   const newSlides =
-  //     slides?.map((obj, i) => (idx === idx ? newSlide : obj)) ?? [];
-  //   updateSlides(newSlides);
-  // };
 
   return (
     <>
@@ -331,7 +214,7 @@ let navigate=useNavigate()
                   height={130}
                 >
                   <source
-                  draggable
+                    draggable
                     src={item.video_files[0].link}
                     onDragEndCapture={() =>
                       handleVideoFile(item.video_files[0].link)
