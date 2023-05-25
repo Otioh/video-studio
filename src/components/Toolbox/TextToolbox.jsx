@@ -118,7 +118,6 @@ function TextToolbox({ setspinn }) {
           }, 1000);
 
           element.play();
-          landplay();
         }
         updateCurrentSlide(slide);
         setspinn(false);

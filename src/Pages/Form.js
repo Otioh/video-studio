@@ -16,6 +16,14 @@ function Form() {
 
   const updateAIResponse = useSlidesStore((state) => state.updateAIResponse);
   const processForm = () => {
+setspinning(true)
+    axios.post('https://app.googptai.com/api/vsl', {description:'some text', title:'Title Text'}).then((res)=>{
+      setspintext("Please wait while we gather resources")
+      console.log(res.data)
+      if(!res.data.error){
+// let newArr=res.data.scenes.map((scene)=>{
+//   return { ...scene, urlVideo:'http://localhost:3000/static/media/eating-healthy.ab23f3c14fd222ad2c36.mp4'}
+// })
     setspinning(true);
     axios
       .post("https://app.googptai.com/api/vsl", {
@@ -37,6 +45,20 @@ function Form() {
           notification.success({ message: res.data.message });
           updateAIResponse({ ...res.data, scenes: newArr });
           navigate("/editor");
+
+        notification.success({ message: res.data.message })
+        // updateAIResponse({ ...res.data, scenes: newArr })
+        updateAIResponse(res.data)
+        navigate('/editor')
+       
+        setspinning(false)
+      }else{
+        notification.error({ message: res.data.message })
+     
+      }
+   
+
+    })   
 
           setspinning(false);
         } else {
