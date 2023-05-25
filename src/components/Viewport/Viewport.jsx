@@ -241,7 +241,7 @@ function Viewport({ previd, setprevid, viewing, setviewing }) {
           }}
         >
           <button
-            className="ant-btn ant-btn-primary"
+            className="ant-btn ant-btn-danger"
             onClick={() => {
               setviewing(false);
               setprevid();

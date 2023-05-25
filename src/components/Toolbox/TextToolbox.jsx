@@ -122,6 +122,7 @@ function TextToolbox({ setspinn }) {
         updateCurrentSlide(slide);
         setspinn(false);
         landView();
+        landplay();
       });
   };
 
@@ -140,7 +141,7 @@ function TextToolbox({ setspinn }) {
     useEffect(()=>{
       if (!AIResponse.error){
 
-        getAudioBlobFromURL(mp3Files[Math.floor(Math.random() * mp3Files.length+1)].url)
+        getAudioBlobFromURL(mp3Files[Math.floor(Math.random() * 26)].url)
           .then((blob) => {
             // Do something with the audio blob
             updateAudio(blob);
