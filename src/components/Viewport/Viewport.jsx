@@ -5,14 +5,11 @@ import useSlidesStore from "../../store/useSlidesStore";
 import ResizableImage from "../ImageResize/ResizableImage";
 import "./Viewport.scss";
 
-function Viewport({previd, setprevid, viewing, setviewing}) {
+function Viewport({ previd, setprevid, viewing, setviewing }) {
   const [dimensions, setDimensions] = useState({
     width: 0,
     height: 0,
   });
-
-
-
 
   const play = useSlidesStore((state) => state.play);
   const updatePlay = useSlidesStore((state) => state.updatePlay);
@@ -61,11 +58,6 @@ function Viewport({previd, setprevid, viewing, setviewing}) {
     updateSlides(newSlides);
   };
 
-
-
-
-
-  
   const [id, setid] = useState();
   const handleDelete = () => {
     const rect = document.getElementById(id);
@@ -235,7 +227,6 @@ function Viewport({previd, setprevid, viewing, setviewing}) {
 
   return (
     <div ref={divRef} className="viewport">
- 
       {viewing && (
         <div
           style={{
@@ -250,6 +241,7 @@ function Viewport({previd, setprevid, viewing, setviewing}) {
           }}
         >
           <button
+            className="ant-btn ant-btn-primary"
             onClick={() => {
               setviewing(false);
               setprevid();
@@ -288,8 +280,6 @@ function Viewport({previd, setprevid, viewing, setviewing}) {
               width={dimensions.width - 3}
               height={dimensions.height - 3}
             ></Rect>
-          
-          
 
             {currentSlide?.images?.map((img, i) => (
               <React.Fragment key={i}>

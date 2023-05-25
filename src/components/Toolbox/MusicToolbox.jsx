@@ -3,15 +3,27 @@ import { useState, useEffect } from "react";
 import "./searchBar.css";
 import useSlidesStore from "../../store/useSlidesStore";
 import mp3Files from "./musicLink";
+import ReactPaginate from "react-paginate";
 
 const ASPECT_RATIO = 16 / 9;
 const DEFAULT_HEIGHT = 250;
 
-const MusicToolbox = () => {
+const MusicToolbox = ({ currentItems }) => {
+  const [currentPage, setCurrentPage] = useState(0);
   // const [loading, setLoading] = useState(true);
   // const [data, setData] = useState([]);
   // const [query, setQuery] = useState("Artificial Intelligence");
   // const [pageUrl, setPageUrl] = useState("");
+
+  const itemsPerPage = 8;
+  const pageCount = Math.ceil(mp3Files.length / itemsPerPage);
+  const handlePageChange = ({ selected }) => {
+    setCurrentPage(selected);
+  };
+  const currentPageData = mp3Files.slice(
+    currentPage * itemsPerPage,
+    (currentPage + 1) * itemsPerPage
+  );
 
   // Use current slide to display here
   const slides = useSlidesStore((state) => state.slides);
@@ -105,14 +117,22 @@ const MusicToolbox = () => {
         /> */}
         {/* {loading && <h5>Fetching Music...</h5>} */}
         <div className="">
-          {mp3Files.map((file, index) => (
+          {currentPageData.map((item, index) => (
+            <div key={index}>
+              <audio controls className="music">
+                <source src={item.url} type="audio/mpeg" />
+              </audio>
+              <img src={item.coverImage} alt={item.title} />
+            </div>
+          ))}
+          {/* {mp3Files.map((file, index) => (
             <div key={index}>
               <audio controls className="music">
                 <source src={file.url} type="audio/mpeg" />
               </audio>
               <img src={file.coverImage} alt={file.title} />
             </div>
-          ))}
+          ))} */}
 
           {/* {data?.map((item, index) => {
             return (
@@ -131,6 +151,14 @@ const MusicToolbox = () => {
             );
           })} */}
         </div>
+        <ReactPaginate
+          previousLabel="Previous"
+          nextLabel="Next"
+          pageCount={pageCount}
+          onPageChange={handlePageChange}
+          containerClassName="pagination"
+          activeClassName="active"
+        />
         {/* <button onClick={getVideos} className="ant-btn ant-btn-primary">
           Load More
         </button> */}

@@ -47,7 +47,9 @@ input:focus {
   grid-row-gap: 10px;
 }
 .music {
-  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  width: 95%;
 }
 .ant-btn-primary {
   margin-left: auto;
@@ -75,7 +77,39 @@ input:focus {
   object-fit: cover;
   cursor: pointer;
 }
-/* .image_list{
-    overflow-y: scroll;
-    height: fit-content;
-} */
+/* Pagination styles */
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  text-decoration: none !important;
+  list-style-type: none !important;
+}
+
+.pagination a,
+.pagination button {
+  padding: 5px;
+  margin: 0 5px;
+  border: 1px solid #0693e3;
+  border-radius: 4px;
+  background-color: #fff;
+  color: #0693e3;
+  cursor: pointer;
+}
+
+.pagination a:hover,
+.pagination button:hover {
+  background-color: #0693e3;
+  color: #fff;
+}
+
+.pagination .active a,
+.pagination .active button {
+  background-color: #0693e3;
+  color: #fff;
+}
+
+.pagination .previous,
+.pagination .next {
+  font-weight: bold;
+}

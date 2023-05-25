@@ -1,8 +1,9 @@
-// import { Bucket } from "../../assets/icons/Bucket";
-import { Gallery } from "../../assets/icons/Gallery";
-import { Text } from "../../assets/icons/Text";
-import { Play } from "../../assets/icons/Play";
 import "./Sidebar.scss";
+import upload from "../../assets/img/upload.svg";
+import video from "../../assets/img/video.svg";
+import music from "../../assets/img/music.svg";
+import text from "../../assets/img/text.svg";
+import image from "../../assets/img/image.svg";
 
 function Sidebar({ activeItem, setActiveItem }) {
   return (
@@ -16,7 +17,14 @@ function Sidebar({ activeItem, setActiveItem }) {
           }
           onClick={() => setActiveItem("upload")}
         >
-          <Gallery />
+          <img
+            src={upload}
+            alt="upload"
+            srcset=""
+            width="40"
+            height="40"
+            style={{ marginLeft: "auto", marginRight: "auto" }}
+          />
           <span>Upload</span>
         </li>
         <li
@@ -27,7 +35,14 @@ function Sidebar({ activeItem, setActiveItem }) {
           }
           onClick={() => setActiveItem("media")}
         >
-          <Gallery />
+          <img
+            src={image}
+            alt="image"
+            srcset=""
+            width="40"
+            height="40"
+            style={{ marginLeft: "auto", marginRight: "auto" }}
+          />
           <span>Images</span>
         </li>
         <li
@@ -38,7 +53,14 @@ function Sidebar({ activeItem, setActiveItem }) {
           }
           onClick={() => setActiveItem("text")}
         >
-          <Text />
+          <img
+            src={text}
+            alt="text"
+            srcset=""
+            width="40"
+            height="40"
+            style={{ marginLeft: "auto", marginRight: "auto" }}
+          />
           <span>Text</span>
         </li>
 
@@ -52,7 +74,14 @@ function Sidebar({ activeItem, setActiveItem }) {
           }
           onClick={() => setActiveItem("graphics")}
         >
-          <Gallery />
+          <img
+            src={video}
+            alt="video"
+            srcset=""
+            width="40"
+            height="40"
+            style={{ marginLeft: "auto", marginRight: "auto" }}
+          />
           <span>Videos</span>
         </li>
 
@@ -64,7 +93,14 @@ function Sidebar({ activeItem, setActiveItem }) {
           }
           onClick={() => setActiveItem("music")}
         >
-          <Play />
+          <img
+            src={music}
+            alt="music"
+            srcset=""
+            width="40"
+            height="40"
+            style={{ marginLeft: "auto", marginRight: "auto" }}
+          />
           <span>Music</span>
         </li>
       </ul>

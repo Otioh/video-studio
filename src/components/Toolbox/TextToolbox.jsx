@@ -1,17 +1,18 @@
-import { Button, Input, Select } from 'antd';
-import React, { useEffect, useState } from 'react';
+import { Button, Input, Select } from "antd";
+import React, { useEffect, useState } from "react";
 import {
   AlignCenterOutlined,
   AlignLeftOutlined,
   AlignRightOutlined,
   BoldOutlined,
   ItalicOutlined,
-  UnderlineOutlined
-} from '@ant-design/icons';
-import { ANIMATION_EASINGS, FONT_OPTIONS } from '../../utils/constants';
-import useSlidesStore from '../../store/useSlidesStore';
+  UnderlineOutlined,
+} from "@ant-design/icons";
+import { ANIMATION_EASINGS, FONT_OPTIONS } from "../../utils/constants";
+import useSlidesStore from "../../store/useSlidesStore";
 import toast from "react-hot-toast";
 import mp3Files from "./musicLink";
+import { HexColorPicker } from "react-colorful";
 
 const { TextArea } = Input;
 
@@ -36,13 +37,13 @@ function TextToolbox({ setspinn }) {
     (state) => state.updateCurrentSlide
   );
 
-    const AIResponse = useSlidesStore((state) => state.AIResponse);
-    const updateAIResponse = useSlidesStore((state) => state.updateAIResponse);
-    const addNewSlide = useSlidesStore((state) => state.addNewSlide);
-    
+  const AIResponse = useSlidesStore((state) => state.AIResponse);
+  const updateAIResponse = useSlidesStore((state) => state.updateAIResponse);
+  const addNewSlide = useSlidesStore((state) => state.addNewSlide);
+
   const updateSlides = useSlidesStore((state) => state.updateSlides);
-   const updateAudio = useSlidesStore((state) => state.updateAudio);
-   let count = AIResponse?.scenes?.length;
+  const updateAudio = useSlidesStore((state) => state.updateAudio);
+  let count = AIResponse?.scenes?.length;
   const handleFontSize = (value) => {
     setFontSize(value);
   };
@@ -65,13 +66,10 @@ function TextToolbox({ setspinn }) {
     document.getElementById("playBtn").click();
   };
 
-
-
-
   const handleVideoFile = (data, text) => {
     setspinn(true);
     const locate = data;
-    
+
     fetch(locate)
       .then((response) => response.blob())
       .then((blob) => {
@@ -103,50 +101,40 @@ function TextToolbox({ setspinn }) {
           element.appendChild(source);
         }
         element.onload = () => {
-      
           window.URL.revokeObjectURL(url);
           // Update the slides array
           const index = currentSlideIndex;
           const newSlides =
             slides?.map((obj, idx) => (idx === index ? slide : obj)) ?? [];
           updateSlides(newSlides);
-           
-            
-          
         };
         if (isImage) {
           element.src = url;
         } else {
-          
           element.getElementsByTagName("source")[0].src = url;
           setText(text);
           setTimeout(() => {
             document.getElementById("addtxt").click();
           }, 1000);
-      
 
           element.play();
-        
-     
         }
         updateCurrentSlide(slide);
-         setspinn(false);
-         landView();
-
+        setspinn(false);
+        landView();
       });
   };
 
+  function getAudioBlobFromURL(url) {
+    return new Promise((resolve, reject) => {
+      fetch(url)
+        .then((response) => response.blob())
+        .then((blob) => resolve(blob))
+        .catch((error) => reject(error));
+    });
+  }
 
 
-
-    function getAudioBlobFromURL(url) {
-      return new Promise((resolve, reject) => {
-        fetch(url)
-          .then((response) => response.blob())
-          .then((blob) => resolve(blob))
-          .catch((error) => reject(error));
-      });
-    }
     
       
     useEffect(()=>{
@@ -165,6 +153,7 @@ function TextToolbox({ setspinn }) {
     
 
  
+
 
 
   const handleAddText = () => {
@@ -205,12 +194,6 @@ function TextToolbox({ setspinn }) {
     }, 100);
   };
 
-
-
-
-
-
-
   const handleTextChange = (event) => {
     const { value } = event.target;
     setText(value);
@@ -243,7 +226,13 @@ function TextToolbox({ setspinn }) {
         >
           <button
             className="play_save_slides"
-            style={{alignSelf:'flex-start', border:'solid 1px red', borderRadius:'7px', padding:'10px', color:'red'}}
+            style={{
+              alignSelf: "flex-start",
+              border: "solid 1px #0693e3",
+              borderRadius: "7px",
+              padding: "10px",
+              color: "#0693e3",
+            }}
             id="playBtn"
             onClick={() => {
               updateAIResponse({ ...AIResponse, error: true });
@@ -256,15 +245,12 @@ function TextToolbox({ setspinn }) {
             id="playBtn"
             type="primary"
             onClick={() => {
-
-
- handleVideoFile(AIResponse.scenes[0]?.urlVideo, AIResponse.scenes[0]?.text);
-
-        
-
+              handleVideoFile(
+                AIResponse.scenes[0]?.urlVideo,
+                AIResponse.scenes[0]?.text
+              );
 
               updateAIResponse({ ...AIResponse, error: true });
-             
             }}
           >
             Build AI Generated Video
@@ -369,17 +355,16 @@ function TextToolbox({ setspinn }) {
           </div>
 
           <div className="stylebox_actions_btngrp">
-            <input
-              type="color"
-              onChange={(e) => setColor(e.target.value)}
-              name="color"
+            <HexColorPicker
+              color={color}
+              onChange={setColor}
+              style={{ marginLeft: "auto", marginRight: "auto" }}
             />
           </div>
           <div className="stylebox_actions_btngrp">
-            <Button type="primary" id='addtxt' onClick={handleAddText}>
+            <Button type="primary" id="addtxt" onClick={handleAddText}>
               Add Text
             </Button>
-        
           </div>
         </div>
       </div>
