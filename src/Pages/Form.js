@@ -4,7 +4,6 @@ import useSlidesStore from "../store/useSlidesStore";
 import "./form.css";
 import axios from "axios";
 import { Spin, notification } from "antd";
-import { HexColorPicker } from "react-colorful";
 
 function Form() {
   let navigate = useNavigate();
@@ -82,25 +81,14 @@ function Form() {
               setText(e.target.value);
             }}
           />
-          <textarea placeholder="Video Description"></textarea>
-          <h3 style={{ textAlign: "center" }}>Choose Color Here</h3>
-          {""}
-          <HexColorPicker
-            color={color}
-            onChange={setColor}
-            style={{
-              marginBottom: "1rem",
-              marginLeft: "auto",
-              marginRight: "auto",
-            }}
-          />
-          {/* <input
-            type="color"
+          <textarea
+            placeholder="Video Description"
             onChange={(e) => {
-              setColor(e.target.value);
+              setdescription(e.target.value);
             }}
-          /> */}
-          <button className="button" type="submit">
+          ></textarea>
+
+          <button className="button" type="submit" onClick={processForm}>
             Build
           </button>
         </div>
