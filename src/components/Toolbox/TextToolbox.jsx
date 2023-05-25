@@ -152,7 +152,7 @@ function TextToolbox({ setspinn }) {
     useEffect(()=>{
       if (!AIResponse.error){
 
-        getAudioBlobFromURL(mp3Files[Math.floor(Math.random() * 26)].url)
+        getAudioBlobFromURL(mp3Files[Math.floor(Math.random() * mp3Files.length+1)].url)
           .then((blob) => {
             // Do something with the audio blob
             updateAudio(blob);
@@ -178,7 +178,7 @@ function TextToolbox({ setspinn }) {
       duration: 2,
       //   fontFamily: fontFamily.value,
       x: 10,
-      y: 500,
+      y: 520,
       inAnimation,
       fontStyle,
       text,
