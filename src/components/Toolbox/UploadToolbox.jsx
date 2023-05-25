@@ -15,6 +15,8 @@ function UploadToolbox() {
     (state) => state.updateCurrentSlide
   );
   const updateSlides = useSlidesStore((state) => state.updateSlides);
+    const updateLocalMedia = useSlidesStore((state) => state.updateLocalMedia);
+   const localMedia = useSlidesStore((state) => state.localMedia);
 
   // This function is to handle image file selection
   const handleFileSelect = (event) => {
@@ -58,6 +60,8 @@ function UploadToolbox() {
       const newSlides =
         slides?.map((obj, idx) => (idx === index ? slide : obj)) ?? [];
       updateSlides(newSlides);
+      
+
     };
     if (isImage) {
       element.src = url;
@@ -67,6 +71,7 @@ function UploadToolbox() {
       element.play();
     }
     updateCurrentSlide(slide);
+    updateLocalMedia([...localMedia, newImage]);
 
   };
 
@@ -100,7 +105,7 @@ function UploadToolbox() {
         />
         {currentSlide?.previewImages?.length ? (
           <div className="image_list video_list">
-            {currentSlide?.previewImages?.map((file, i) => (
+            {localMedia?.map((file, i) => (
               <div className="image_item" key={i}>
                 {file.image.nodeName == "IMG" ? (
                   <img
@@ -118,7 +123,7 @@ function UploadToolbox() {
                     />
                   </video>
                 )}
-                <DeleteOutlined onClick={() => deleteImageItem(i)} />
+              
               </div>
             ))}
           </div>
