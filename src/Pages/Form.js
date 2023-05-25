@@ -2,16 +2,17 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useSlidesStore from "../store/useSlidesStore";
 import "./form.css";
+import { HexColorPicker } from "react-colorful";
 
 function Form() {
   let navigate = useNavigate();
-  const [text, setText]=useState('')
-  const [color, setcolor] = useState('black')
+  const [text, setText] = useState("");
+  const [color, setColor] = useState("#000000");
 
   const updateAIResponse = useSlidesStore((state) => state.updateAIResponse);
   const processForm = () => {
     updateAIResponse({
-        text,
+      text,
       status: true,
       urlVideo:
         "https://player.vimeo.com/external/189545487.sd.mp4?s=8cd2af1ec08f7ce121a5a6a09c78c05237943524&profile_id=164&oauth2_token_id=57447761",
@@ -36,13 +37,30 @@ function Form() {
             justifyContent: "space-evenly",
           }}
         >
-          <input placeholder="Video Title" onChange={(e)=>{
-            setText(e.target.value)
-          }} />
+          <input
+            placeholder="Video Title"
+            onChange={(e) => {
+              setText(e.target.value);
+            }}
+          />
           <textarea placeholder="Video Description"></textarea>
-                Choose Color   <input  type='color' onChange={(e) => {
-                      setcolor(e.target.value)
-                  }} />
+          <h3 style={{ textAlign: "center" }}>Choose Color Here</h3>
+          {""}
+          <HexColorPicker
+            color={color}
+            onChange={setColor}
+            style={{
+              marginBottom: "1rem",
+              marginLeft: "auto",
+              marginRight: "auto",
+            }}
+          />
+          {/* <input
+            type="color"
+            onChange={(e) => {
+              setColor(e.target.value);
+            }}
+          /> */}
           <button className="button" type="submit">
             Build
           </button>
