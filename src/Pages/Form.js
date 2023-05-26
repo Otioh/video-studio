@@ -51,9 +51,7 @@ setspinning(true)
         height: "100vh",
       }}
     >
-      <video controls src={require('../assets/vid/eating-healthy.mp4')}>
 
-      </video>
       <div className="form-group">
         {logRe && (
           <a href="https://app.googptai.com/login" className="button">

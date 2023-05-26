@@ -1,9 +1,6 @@
 import "./Sidebar.scss";
-import upload from "../../assets/img/upload.svg";
-import video from "../../assets/img/video.svg";
-import music from "../../assets/img/music.svg";
-import text from "../../assets/img/text.svg";
-import image from "../../assets/img/image.svg";
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faImage, faVideo, faUpload, faFileText, faMusic} from '@fortawesome/free-solid-svg-icons';
 
 function Sidebar({ activeItem, setActiveItem }) {
   return (
@@ -17,14 +14,7 @@ function Sidebar({ activeItem, setActiveItem }) {
           }
           onClick={() => setActiveItem("upload")}
         >
-          <img
-            src={upload}
-            alt="upload"
-            srcset=""
-            width="40"
-            height="40"
-            style={{ marginLeft: "auto", marginRight: "auto" }}
-          />
+          <FontAwesomeIcon icon={faUpload} style={{ fontSize: "xx-large" }} />
           <span>Upload</span>
         </li>
         <li
@@ -35,14 +25,7 @@ function Sidebar({ activeItem, setActiveItem }) {
           }
           onClick={() => setActiveItem("media")}
         >
-          <img
-            src={image}
-            alt="image"
-            srcset=""
-            width="40"
-            height="40"
-            style={{ marginLeft: "auto", marginRight: "auto" }}
-          />
+          <FontAwesomeIcon icon={faImage} style={{ fontSize: "xx-large" }} />
           <span>Images</span>
         </li>
         <li
@@ -53,14 +36,7 @@ function Sidebar({ activeItem, setActiveItem }) {
           }
           onClick={() => setActiveItem("text")}
         >
-          <img
-            src={text}
-            alt="text"
-            srcset=""
-            width="40"
-            height="40"
-            style={{ marginLeft: "auto", marginRight: "auto" }}
-          />
+          <FontAwesomeIcon icon={faFileText} style={{ fontSize: "xx-large" }} />
           <span>Text</span>
         </li>
 
@@ -74,14 +50,7 @@ function Sidebar({ activeItem, setActiveItem }) {
           }
           onClick={() => setActiveItem("graphics")}
         >
-          <img
-            src={video}
-            alt="video"
-            srcset=""
-            width="40"
-            height="40"
-            style={{ marginLeft: "auto", marginRight: "auto" }}
-          />
+          <FontAwesomeIcon icon={faVideo} style={{ fontSize: "xx-large" }} />
           <span>Videos</span>
         </li>
 
@@ -93,14 +62,7 @@ function Sidebar({ activeItem, setActiveItem }) {
           }
           onClick={() => setActiveItem("music")}
         >
-          <img
-            src={music}
-            alt="music"
-            srcset=""
-            width="40"
-            height="40"
-            style={{ marginLeft: "auto", marginRight: "auto" }}
-          />
+          <FontAwesomeIcon icon={faMusic} style={{ fontSize: "xx-large" }} />
           <span>Music</span>
         </li>
       </ul>
