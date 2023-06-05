@@ -290,6 +290,7 @@ function Timeline() {
           {slides?.map((slide, i) => (
             <div
               key={i}
+              id={i}
               onClick={() => handleSlideClick(slide, i)}
               className={`timeline_slide_preview_item ${
                 currentSlideIndex === i ? "active" : "not_active"

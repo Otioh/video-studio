@@ -15,7 +15,7 @@ const MusicToolbox = ({ currentItems }) => {
   // const [query, setQuery] = useState("Artificial Intelligence");
   // const [pageUrl, setPageUrl] = useState("");
 
-  const itemsPerPage = 8;
+  const itemsPerPage = 10;
   const pageCount = Math.ceil(mp3Files.length / itemsPerPage);
   const handlePageChange = ({ selected }) => {
     setCurrentPage(selected);
@@ -152,7 +152,7 @@ const MusicToolbox = ({ currentItems }) => {
           })} */}
         </div>
         <ReactPaginate
-          previousLabel="Previous"
+          previousLabel="Prev"
           nextLabel="Next"
           pageCount={pageCount}
           onPageChange={handlePageChange}

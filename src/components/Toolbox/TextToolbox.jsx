@@ -1,4 +1,4 @@
-import { Button, Input, Select } from "antd";
+import { Button, Input, Select, Modal } from "antd";
 import React, { useEffect, useState } from "react";
 import {
   AlignCenterOutlined,
@@ -32,10 +32,17 @@ function TextToolbox({ setspinn }) {
   const DEFAULT_HEIGHT = 500;
   const slides = useSlidesStore((state) => state.slides);
   const currentSlide = useSlidesStore((state) => state.currentSlide);
+
   const currentSlideIndex = useSlidesStore((state) => state.currentSlideIndex);
   const updateCurrentSlide = useSlidesStore(
     (state) => state.updateCurrentSlide
   );
+  const updateCurrentSlideIndex = useSlidesStore(
+    (state) => state.updateCurrentSlideIndex
+  );
+
+
+const [activeSlide, sas ]= useState(0);
 
   const AIResponse = useSlidesStore((state) => state.AIResponse);
   const updateAIResponse = useSlidesStore((state) => state.updateAIResponse);
@@ -65,8 +72,11 @@ function TextToolbox({ setspinn }) {
   const landplay = () => {
     document.getElementById("playBtn").click();
   };
+  const build=()=>{
+     document.getElementById("build").click();
+  }
 
-  const handleVideoFile = (data, text) => {
+  const handleVideoFile = (data) => {
     setspinn(true);
     const locate = data;
 
@@ -88,11 +98,41 @@ function TextToolbox({ setspinn }) {
           height: DEFAULT_HEIGHT,
           width: DEFAULT_HEIGHT * ASPECT_RATIO,
         };
+
+  const textNode = {
+    id: Date.now(),
+    fontSize: fontSize ? parseInt(fontSize) : 19,
+    size: fontSize ? parseInt(fontSize) : 19,
+    colour: color,
+    outAnimation: "EaseOut",
+    duration: 2,
+    //   fontFamily: fontFamily.value,
+    x: 10,
+    y: 475,
+    inAnimation,
+    fontStyle,
+    text: AIResponse.scenes[activeSlide]?.text,
+    align,
+    textDecoration,
+  };
+
+  //  Update current Slide
+
+
+
+
         let slide = { ...currentSlide };
+
+
+  const allTexts = [...slide.texts, textNode];
+
+     slide.texts = allTexts;
+
         slide = {
           ...slide,
           images: [...slide.images, newImage],
           previewImages: [...slide.previewImages, newImage],
+      
         };
         if (!isImage) {
           let source = document.createElement("source");
@@ -103,27 +143,51 @@ function TextToolbox({ setspinn }) {
         element.onload = () => {
           window.URL.revokeObjectURL(url);
           // Update the slides array
-          const index = currentSlideIndex;
-          const newSlides =
-            slides?.map((obj, idx) => (idx === index ? slide : obj)) ?? [];
-          updateSlides(newSlides);
+          // const index = currentSlideIndex;
+          // const newSlides =
+          //   slides?.map((obj, idx) => (idx === index ? slide : obj)) ?? [];
+          // updateSlides(newSlides);
         };
         if (isImage) {
           element.src = url;
         } else {
           element.getElementsByTagName("source")[0].src = url;
-          setText(text);
-          setTimeout(() => {
-            document.getElementById("addtxt").click();
-          }, 1000);
+         
+  element.muted = true;
+  element.loop = true;
+  element.play();
+  
 
-          element.play();
-        }
-        updateCurrentSlide(slide);
-        setspinn(false);
-        landView();
-        landplay();
-      });
+       
+
+  landView();
+
+
+
+  setTimeout(() => {
+       if (activeSlide < AIResponse.scenes.length-1) {
+        addNewSlide();
+       }
+       setTimeout(() => {
+              setspinn(false);
+         if (activeSlide < AIResponse.scenes.length) {
+           updateAIResponse({ ...AIResponse, error: false });
+       
+       
+         }
+         setTimeout(() => {
+              build();
+         }, 400);
+       }, 200);
+  }, 10000);
+  
+
+  }
+
+    updateCurrentSlide(slide);
+
+  
+      })
   };
 
   function getAudioBlobFromURL(url) {
@@ -154,9 +218,6 @@ function TextToolbox({ setspinn }) {
     
 
  
-
-
-
   const handleAddText = () => {
     if (!text) return;
     const textNode = {
@@ -168,7 +229,7 @@ function TextToolbox({ setspinn }) {
       duration: 2,
       //   fontFamily: fontFamily.value,
       x: 10,
-      y: 520,
+      y: 475,
       inAnimation,
       fontStyle,
       text,
@@ -212,51 +273,37 @@ function TextToolbox({ setspinn }) {
     <>
       <div className="toolbox_title">Text Properties</div>
       {!AIResponse.error && (
-        <div
-          style={{
-            position: "fixed",
-            top: 0,
-            left: 0,
-            zIndex: 200,
-            backgroundColor: "rgba(0,0,0,0.5)",
-            height: "100vh",
-            width: "100vw",
-            display: "flex",
-            alignItems: "center",
+        <Modal
+          width={700}
+          title="AI Video Script"
+          footer={[
+            <Button
+              key="submit"
+              type="primary"
+              id="build"
+              onClick={() => {
+                updateAIResponse({ ...AIResponse, error: true });
+                if (activeSlide < AIResponse.scenes.length) {
+                  handleVideoFile(AIResponse.scenes[activeSlide]?.urlVideo);
+
+                  sas(activeSlide + 1);
+                } else {
+                  setTimeout(() => {
+                    landplay();
+                  }, 100);
+                }
+              }}
+            >
+              Build
+            </Button>,
+          ]}
+          open={!AIResponse.error}
+          onCancel={() => {
+            updateAIResponse({ ...AIResponse, error: true });
           }}
         >
-          <button
-            className="play_save_slides"
-            style={{
-              alignSelf: "flex-start",
-              border: "solid 1px #0693e3",
-              borderRadius: "7px",
-              padding: "10px",
-              color: "#0693e3",
-            }}
-            id="playBtn"
-            onClick={() => {
-              updateAIResponse({ ...AIResponse, error: true });
-            }}
-          >
-            Cancel
-          </button>
-          <Button
-            className="play_save_slides"
-            id="playBtn"
-            type="primary"
-            onClick={() => {
-              handleVideoFile(
-                AIResponse.scenes[0]?.urlVideo,
-                AIResponse.scenes[0]?.text
-              );
-
-              updateAIResponse({ ...AIResponse, error: true });
-            }}
-          >
-            Build AI Generated Video
-          </Button>
-        </div>
+          <p>Video script is ready</p>
+        </Modal>
       )}
 
       <div>
@@ -268,6 +315,7 @@ function TextToolbox({ setspinn }) {
           onChange={handleTextChange}
           placeholder="Enter Text"
           maxLength={60}
+          style={{ height: "150px" }}
         />
       </div>
       <div className="stylebox">
@@ -276,7 +324,7 @@ function TextToolbox({ setspinn }) {
           <div className="dropdown-wrapper">
             <Select
               style={{
-                width: "200px",
+                width: "70px",
               }}
               showSearch
               filterOption={(input, option) =>
@@ -289,69 +337,65 @@ function TextToolbox({ setspinn }) {
               onChange={handleFontSize}
               options={FONT_OPTIONS}
             />
-          </div>
-          <div className="dropdown-wrapper">
             <Select
               defaultValue="Linear"
               style={{
-                width: "200px",
+                width: "120px",
               }}
               onChange={(value) => setInAnimation(value)}
               options={ANIMATION_EASINGS}
             />
           </div>
+
           <div className="stylebox_actions_btngrp">
             <div className="btn-actions">
-              <span className="btn">
-                <BoldOutlined
-                  onClick={() => setFontStyle("bold")}
-                  style={{
-                    color: fontStyle === "bold" ? "black" : "grey",
-                  }}
-                />
-              </span>
-              <span className="btn">
-                <ItalicOutlined
-                  onClick={() => setFontStyle("italic")}
-                  style={{
-                    color: fontStyle === "italic" ? "black" : "grey",
-                  }}
-                />
-              </span>
-              <span className="btn">
-                <UnderlineOutlined
-                  onClick={handleTextDecoration}
-                  style={{
-                    color: textDecoration ? "black" : "grey",
-                  }}
-                />
-              </span>
+              <BoldOutlined
+                onClick={() => setFontStyle("bold")}
+                style={{
+                  color: fontStyle === "bold" ? "black" : "grey",
+                  width: "50px",
+                }}
+              />
+
+              <ItalicOutlined
+                onClick={() => setFontStyle("italic")}
+                style={{
+                  color: fontStyle === "italic" ? "black" : "grey",
+                  width: "50px",
+                }}
+              />
+
+              <UnderlineOutlined
+                onClick={handleTextDecoration}
+                style={{
+                  color: textDecoration ? "black" : "grey",
+                  width: "50px",
+                }}
+              />
             </div>
             <div className="btn-actions">
-              <span className="btn">
+              
                 <AlignLeftOutlined
                   onClick={() => setAlign("left")}
                   style={{
                     color: align === "left" ? "black" : "grey",
                   }}
                 />
-              </span>
-              <span className="btn">
+             
                 <AlignCenterOutlined
                   onClick={() => setAlign("center")}
                   style={{
                     color: align === "center" ? "black" : "grey",
                   }}
                 />
-              </span>
-              <span className="btn">
+             
                 <AlignRightOutlined
                   onClick={() => setAlign("right")}
                   style={{
                     color: align === "right" ? "black" : "grey",
                   }}
                 />
-              </span>
+           
             </div>
           </div>
 
@@ -359,7 +403,7 @@ function TextToolbox({ setspinn }) {
             <HexColorPicker
               color={color}
               onChange={setColor}
-              style={{ marginLeft: "auto", marginRight: "auto" }}
+              style={{ marginLeft: "auto", marginRight: "auto", height:'70px' }}
             />
           </div>
           <div className="stylebox_actions_btngrp">

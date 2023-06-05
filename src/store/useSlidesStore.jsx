@@ -12,11 +12,23 @@ const useSlidesStore = create((set) => ({
   isRecording: false,
   AIResponse: {
     error: true,
-    text: "Some AI Genegerated Content Here...",
-    urlVideo:
-      "https://player.vimeo.com/external/189545487.sd.mp4?s=8cd2af1ec08f7ce121a5a6a09c78c05237943524&profile_id=164&oauth2_token_id=57447761",
-    urlAudio:
-      "https://s3-us-west-2.amazonaws.com/s.cdpn.io/123941/Yodel_Sound_Effect.mp3",
+    scenes: [
+      {
+        text: "First Scene is here",
+        urlVideo:
+          "http://localhost:3000/static/media/eating-healthy.ab23f3c14fd222ad2c36.mp4",
+      },
+      {
+        text: "Second Scene is here",
+        urlVideo:
+          "http://localhost:3000/static/media/eating-healthy.ab23f3c14fd222ad2c36.mp4",
+      },
+      {
+        text: "Third Scene is here",
+        urlVideo:
+          "http://localhost:3000/static/media/eating-healthy.ab23f3c14fd222ad2c36.mp4",
+      },
+    ],
   },
   addNewSlide: () =>
     set((state) => ({

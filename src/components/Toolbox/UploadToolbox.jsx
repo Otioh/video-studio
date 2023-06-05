@@ -4,7 +4,7 @@ import useSlidesStore from "../../store/useSlidesStore";
 import "../Toolbox/searchBar.css";
 
 const ASPECT_RATIO = 16 / 9;
-const DEFAULT_HEIGHT = 250;
+const DEFAULT_HEIGHT = 470;
 
 function UploadToolbox() {
   // Use current slide to display here
@@ -66,9 +66,11 @@ function UploadToolbox() {
     if (isImage) {
       element.src = url;
     } else {
-      element.getElementsByTagName("source")[0].src = url;
-      element.muted=true;
-      element.play();
+       element.getElementsByTagName("source")[0].src = url;
+       element.muted=true
+       element.loop = true;
+       element.play();
+    
     }
     updateCurrentSlide(slide);
     updateLocalMedia([...localMedia, newImage]);

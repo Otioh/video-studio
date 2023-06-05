@@ -45,7 +45,7 @@ const [spinn, setspinn] = useState(false);
           initialStep={0}
           onExit={onExit}
         />
-        <Spin spinning={spinn} tip="Downloading File to Canvas" size="large">
+        <Spin spinning={spinn} tip="Downloading Files to Canvas, please wait patiently" size="large">
           <div className="content" />
         </Spin>
         {/* <Hints

@@ -107,7 +107,7 @@ function Header({ handleGetStarted, previd, setprevid, setviewing }) {
 
   // This function is to handle the event when need to play the complete video
   const handlePlayCompleteVideo = async () => {
-    if (isPlay) return;
+
 
     if (!audioSelected) {
       toast.error("Please select an audio file first");
@@ -149,8 +149,9 @@ function Header({ handleGetStarted, previd, setprevid, setviewing }) {
 
   // This function is used to handle the play and save
   const handleSave = async () => {
-    
-    if (!audioSelected) {
+       document.getElementById("0").click();
+    handlePreview()
+    if (!audioSelected) { 
       toast.error("Please select an audio file first");
       return;
     }
@@ -200,8 +201,8 @@ function Header({ handleGetStarted, previd, setprevid, setviewing }) {
           <Button
             className="preview_current_slide"
             disabled={isPlay || isRecording}
-            id="viewBtn"
-            onClick={handlePreview}
+            id="playBtn"
+            onClick={handleSave}
             icon={<Play />}
           >
             Preview
@@ -209,11 +210,11 @@ function Header({ handleGetStarted, previd, setprevid, setviewing }) {
           <Button
             className="play_save_slides"
             disabled={isPlay || isRecording}
-            onClick={handleSave}
-            id="playBtn"
+            onClick={handlePreview}
             type="primary"
+            id="viewBtn"
           >
-            Play and Save
+            Download
           </Button>
         </div>
       </div>

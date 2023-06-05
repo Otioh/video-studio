@@ -171,7 +171,7 @@ const GraphicToolbox = ({ setspinn }) => {
         {loading ? (
           <h5>Loading Videos</h5>
         ) : searchResults.length > 0 ? (
-          <div className="card">
+          <div className="card" style={{ display: "grid" }}>
             {searchResults.map((item) => {
               return (
                 <div onClick={() => console.log("Hello World")}>
@@ -198,7 +198,7 @@ const GraphicToolbox = ({ setspinn }) => {
             })}
           </div>
         ) : (
-          <div className="card">
+          <div className="card" style={{ display: "grid" }}>
             {curatedVideos.map((item) => (
               <div
                 onDragEndCapture={() =>

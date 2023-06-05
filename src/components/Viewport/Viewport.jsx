@@ -4,6 +4,7 @@ import { Layer, Rect, Stage, Text } from "react-konva";
 import useSlidesStore from "../../store/useSlidesStore";
 import ResizableImage from "../ImageResize/ResizableImage";
 import "./Viewport.scss";
+import {Modal, Button} from 'antd'
 
 function Viewport({ previd, setprevid, viewing, setviewing }) {
   const [dimensions, setDimensions] = useState({
@@ -228,41 +229,34 @@ function Viewport({ previd, setprevid, viewing, setviewing }) {
   return (
     <div ref={divRef} className="viewport">
       {viewing && (
-        <div
-          style={{
-            height: "100%",
-            width: "100%",
-            backgroundColor: "black",
-            position: "fixed",
-            zIndex: 100,
-
-            top: 0,
-            left: 0,
+        <Modal
+          width={700}
+          title="AI Video Script"
+          footer={[
+            <Button
+              key="submit"
+              type="error"
+              onClick={() => {
+                setviewing(false);
+                setprevid();
+              }}
+            >
+              Cancel
+            </Button>,
+          ]}
+          open={viewing}
+          onCancel={() => {
+            setviewing(false);
+            setprevid();
           }}
         >
-          <button
-            className="ant-btn ant-btn-danger"
-            onClick={() => {
-              setviewing(false);
-              setprevid();
-            }}
-          >
-            Stop Preview
-          </button>
-          <div
-            style={{
-              height: "100%",
-              width: "100%",
-
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            Please Wait
-            <video controls src={previd} loop autoPlay></video>
-          </div>
-        </div>
+          <p>Playing</p>
+          {previd ? (
+            <video controls width={"100%"} src={previd} loop autoPlay></video>
+          ) : (
+            <h4>Please Wait for video to build from all scenes and play</h4>
+          )}
+        </Modal>
       )}
       <>
         <Stage

@@ -194,31 +194,34 @@ function MediaToolbox({ setspinn }) {
         {loading ? (
           <h5>Fetching Images...</h5>
         ) : searchResults.length > 0 ? (
-          <div className="card">
+          <div className="card" style={{ display: "grid" }}>
             {searchResults.map((item) => {
               return (
-                <div key={item.id} style={{ width: "100%" }}>
+                <div
+                  key={item.id}
+             
+                >
                   <img
                     onClick={handleImageFileSelect}
                     src={item.src.large}
                     alt={item.id}
-                    width={130}
-                    height={130}
+                    width={100}
+                    height={100}
                   />
                 </div>
               );
             })}
           </div>
         ) : (
-          <div className="card">
+          <div className="card" style={{ display: "grid" }}>
             {curatedPhotos.map((photo) => (
               <img
                 onDragEndCapture={handleImageFileSelect}
                 key={photo.id}
                 src={photo.src.large}
                 alt={photo.photographer}
-                width={130}
-                height={130}
+                width={100}
+                height={100}
               />
             ))}
           </div>
